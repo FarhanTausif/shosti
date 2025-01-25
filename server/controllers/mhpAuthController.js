@@ -3,19 +3,39 @@ import jwt from "jsonwebtoken";
 import MHP from "../models/MHP.js";
 
 // Signup for MHP
+
 export const signupMHP = async (req, res) => {
-    const { username, bmdcRegNo, email, password } = req.body;
-    try {
-      const hashedPassword = await bcrypt.hash(password, 10);
-      const mhp = new MHP({ username, bmdcRegNo, email, password: hashedPassword });
-      await mhp.save();
-      res.status(201).json({ message: "MHP signed up successfully" });
-    } catch (error) {
-      res.status(500).json({ message: error.message });
+  const { username, bmdcRegNo, email, password } = req.body;
+
+  try {
+    // Check for existing email or BMDC number
+    const existingMHP = await MHP.findOne({ 
+      $or: [{ email }, { bmdcRegNo }] 
+    });
+    
+    if (existingMHP) {
+      return res.status(409).json({ 
+        message: "Email or BMDC registration number already exists" 
+      });
     }
-  };
-  
-  // MHP Sign-In
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const mhp = new MHP({ 
+      username, 
+      bmdcRegNo, 
+      email, 
+      password: hashedPassword 
+    });
+    
+    await mhp.save();
+    res.status(201).json({ message: "MHP signed up successfully" });
+    
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// MHP Sign-In
   export const signinMHP = async (req, res) => {
     const { email, password } = req.body;
   
