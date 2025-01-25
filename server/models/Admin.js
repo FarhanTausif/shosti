@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const AdminSchema = new mongoose.Schema({
+const adminSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
@@ -10,7 +10,14 @@ const AdminSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  role: {
+    type: String,
+    enum: ['general-admin', 'mh-admin'], // Enforce valid roles
+    required: true,
+  },
+  // Add other fields if needed (e.g., name)
 });
 
-const Admin = mongoose.model('Admin', AdminSchema);
+const Admin = mongoose.model('Admin', adminSchema);
+
 export default Admin;
