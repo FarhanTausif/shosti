@@ -15,8 +15,8 @@ export default function AttendeeSignup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("/api/auth/signup/attendee", {
-        method: "POST",
+      const res = await fetch("http://localhost:3100/api/auth/signup/attendee", { 
+        method: "POST", 
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
