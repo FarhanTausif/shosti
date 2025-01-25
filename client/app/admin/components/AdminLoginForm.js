@@ -1,10 +1,12 @@
 'use client';
 
+import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { Alert } from "@/components/ui/alert";
+import { ReloadIcon } from "@radix-ui/react-icons";
 
 export const AdminLoginForm = ({
   email,
@@ -13,8 +15,19 @@ export const AdminLoginForm = ({
   handleEmailChange,
   handlePasswordChange,
   handleSubmit,
-  clearError
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    try {
+      await handleSubmit(e);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 p-4">
       <Card className="group w-full max-w-md p-8 shadow-2xl transition-all duration-500 hover:shadow-3xl backdrop-blur-lg bg-white/10 border border-white/20 hover:bg-white/15">
@@ -27,7 +40,7 @@ export const AdminLoginForm = ({
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleFormSubmit} className="space-y-6">
           <div className="space-y-4">
             <div className="relative">
               <Label htmlFor="email" className="text-gray-300/90">
@@ -38,14 +51,10 @@ export const AdminLoginForm = ({
                 type="email"
                 placeholder="admin@example.com"
                 value={email}
-                onChange={(e) => {
-                  handleEmailChange(e);
-                  clearError();
-                }}
-                onFocus={clearError}
+                onChange={handleEmailChange}
                 className="mt-2 bg-white/5 border-white/20 text-gray-100 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/50 transition-all duration-300 placeholder:text-gray-400"
+                disabled={isLoading}
               />
-              <div className="absolute bottom-0 left-0 w-0 h-[2px] bg-blue-400 transition-all duration-300 group-hover:w-full" />
             </div>
 
             <div className="relative">
@@ -57,14 +66,10 @@ export const AdminLoginForm = ({
                 type="password"
                 placeholder="••••••••"
                 value={password}
-                onChange={(e) => {
-                  handlePasswordChange(e);
-                  clearError();
-                }}
-                onFocus={clearError}
+                onChange={handlePasswordChange}
                 className="mt-2 bg-white/5 border-white/20 text-gray-100 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/50 transition-all duration-300 placeholder:text-gray-400"
+                disabled={isLoading}
               />
-              <div className="absolute bottom-0 left-0 w-0 h-[2px] bg-blue-400 transition-all duration-300 group-hover:w-full" />
             </div>
           </div>
 
@@ -80,14 +85,18 @@ export const AdminLoginForm = ({
           <Button 
             type="submit" 
             className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white hover:from-blue-600 hover:to-cyan-600 transform transition-all duration-300 hover:scale-[1.02] shadow-lg hover:shadow-blue-500/20 active:scale-95"
+            disabled={isLoading}
           >
-            <span className="drop-shadow-md">Sign In</span>
+            {isLoading ? (
+              <>
+                <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                Authenticating...
+              </>
+            ) : (
+              <span className="drop-shadow-md">Sign In</span>
+            )}
           </Button>
         </form>
-
-        <div className="mt-6 text-center text-sm text-gray-400 hover:text-blue-400 transition-colors">
-            
-        </div>
       </Card>
     </div>
   );
