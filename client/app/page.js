@@ -1,92 +1,152 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="bg-gradient-to-r from-indigo-50 via-blue-100 to-teal-100 text-gray-800">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-teal-75">
       {/* Header */}
-      {/* <header className="flex justify-between items-center p-6 bg-indigo-600 text-white shadow-lg">
-        <h1 className="text-3xl font-semibold">Shosti</h1>
-        <nav>
-          <ul className="flex space-x-6">
-            <li><a href="/" className="hover:text-indigo-200">Home</a></li>
-            <li><a href="/about" className="hover:text-indigo-200">About</a></li>
-            <li><a href="/contact" className="hover:text-indigo-200">Contact</a></li>
-            <li><a href="/signin" className="hover:text-indigo-200"><Button>Sign in</Button></a></li> 
-          </ul>
-        </nav>
-      </header> */}
-
-      <header className="flex justify-between items-center p-6 bg-indigo-600 text-white shadow-lg">
-        <h1 className="text-3xl font-bold tracking-tight">Shosti</h1>
-        <nav>
-          <ul className="flex items-center gap-8">
-            <li>
-              <a href="/" className="text-sm font-medium hover:text-indigo-200 transition-colors">
-                Home
-              </a>
-            </li>
-            <li>
-              <a href="/about" className="text-sm font-medium hover:text-indigo-200 transition-colors">
-                About
-              </a>
-            </li>
-            <li>
-              <a href="/contact" className="text-sm font-medium hover:text-indigo-200 transition-colors">
-                Contact
-              </a>
-            </li>
-            <li>
-              <Button
-                variant="secondary"
-                size="sm"
-                className="rounded-full px-6 font-semibold hover:bg-indigo-700 hover:text-white transition-all"
+      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200/60">
+        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-20">
+            <Link href="/" className="group">
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-teal-500 bg-clip-text text-transparent transition-all duration-300 group-hover:from-indigo-700 group-hover:to-teal-600">
+                Shosti
+              </h1>
+            </Link>
+            <div className="flex items-center space-x-8">
+              <nav className="hidden md:flex items-center space-x-8">
+                <Link 
+                  href="/about" 
+                  className="text-sm font-medium text-slate-600 hover:text-indigo-600 transition-colors duration-300 hover:-translate-y-0.5"
+                >
+                  About
+                </Link>
+                <Link
+                  href="/contact" 
+                  className="text-sm font-medium text-slate-600 hover:text-indigo-600 transition-colors duration-300 hover:-translate-y-0.5"
+                >
+                  Contact
+                </Link>
+              </nav>
+              <Button 
                 asChild
+                className="rounded-full px-8 bg-gradient-to-r from-indigo-600 to-teal-500 text-white hover:from-indigo-700 hover:to-teal-600 transition-all transform hover:scale-105 shadow-lg hover:shadow-indigo-200/40"
               >
-                <a href="/signin">
-                  Sign in
-                </a>
+                <Link href="/signin">Sign in</Link>
               </Button>
-            </li>
-          </ul>
+            </div>
+          </div>
         </nav>
       </header>
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-500 to-teal-400 text-white text-center py-20 rounded-b-3xl shadow-2xl">
-        <h2 className="text-5xl font-extrabold mb-4">Welcome to Shosti</h2>
-        <p className="text-xl mb-6">Your space for mental health support and resources</p>
-        <Button variant="outline" className="text-blue-600 bg-white py-2 px-6 rounded-lg shadow-lg hover:bg-blue-100 transform hover:scale-105 transition-all">Get Started</Button>
+      <section className="relative py-24 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="relative z-10 space-y-8">
+            <h1 className="text-6xl font-bold tracking-tighter bg-gradient-to-r from-slate-900 to-slate-800 bg-clip-text text-transparent mb-6 animate-float">
+              <span className="block mb-4">Mental Wellness</span>
+              <span className="text-4xl font-medium bg-gradient-to-r from-indigo-600 to-teal-500 bg-clip-text text-transparent">
+                Redefined
+              </span>
+            </h1>
+            <p className="text-xl text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+              Empowering your journey to mental health with compassionate support and expert resources
+            </p>
+            <Button
+              size="lg"
+              className="bg-gradient-to-r from-indigo-600 to-teal-500 text-white hover:from-indigo-700 hover:to-teal-600 transition-all transform hover:scale-105 shadow-lg hover:shadow-indigo-200/40 px-12 py-6 text-lg"
+            >
+              Start Your Journey
+            </Button>
+          </div>
+          <div className="absolute inset-0 opacity-15 [mask-image:radial-gradient(ellipse_at_center,white,transparent)]">
+            <div className="absolute inset-0 bg-[url(/grid.svg)] bg-center [mask-image:linear-gradient(180deg,white,transparent)]" />
+          </div>
+        </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-16 px-6 text-center">
-        <h3 className="text-3xl font-semibold mb-8">Our Features</h3>
-        <Container className="grid md:grid-cols-3 gap-8">
-          <Card className="p-6 bg-white shadow-lg rounded-lg hover:shadow-xl transition-shadow">
-            <h4 className="text-xl font-semibold mb-4 text-teal-500">Resources</h4>
-            <p>Access a curated library of mental health articles, podcasts, and videos.</p>
-          </Card>
-          <Card className="p-6 bg-white shadow-lg rounded-lg hover:shadow-xl transition-shadow">
-            <h4 className="text-xl font-semibold mb-4 text-teal-500">Sessions</h4>
-            <p>Book online or offline sessions with experienced mental health professionals.</p>
-          </Card>
-          <Card className="p-6 bg-white shadow-lg rounded-lg hover:shadow-xl transition-shadow">
-            <h4 className="text-xl font-semibold mb-4 text-teal-500">Mindfulness</h4>
-            <p>Guided mindfulness exercises to help you relax and focus.</p>
-          </Card>
+      <section className="py-20 bg-gradient-to-b from-white/30 to-transparent">
+        <Container className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h3 className="text-4xl font-bold text-center text-slate-900 mb-16">
+            <span className="bg-gradient-to-r from-indigo-600 to-teal-500 bg-clip-text text-transparent">
+              Why Choose Shosti?
+            </span>
+          </h3>
+          <div className="grid md:grid-cols-3 gap-12">
+            {/* Professional Support */}
+            <Card className="p-8 bg-white/90 backdrop-blur-sm border border-slate-200/60 hover:border-indigo-200/80 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+              <div className="flex flex-col items-center text-center space-y-6">
+                <div className="w-20 h-20 bg-indigo-100/80 rounded-2xl mb-4 flex items-center justify-center backdrop-blur-sm">
+                  <svg className="w-10 h-10 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                  </svg>
+                </div>
+                <h4 className="text-2xl font-semibold text-slate-900 mb-2">Professional Support</h4>
+                <p className="text-slate-600 leading-relaxed">
+                  Connect with licensed therapists and mental health experts through secure video sessions
+                </p>
+              </div>
+            </Card>
+
+            {/* Guided Resources */}
+            <Card className="p-8 bg-white/90 backdrop-blur-sm border border-slate-200/60 hover:border-teal-200/80 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+              <div className="flex flex-col items-center text-center space-y-6">
+                <div className="w-20 h-20 bg-teal-100/80 rounded-2xl mb-4 flex items-center justify-center backdrop-blur-sm">
+                  <svg className="w-10 h-10 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"/>
+                  </svg>
+                </div>
+                <h4 className="text-2xl font-semibold text-slate-900 mb-2">Guided Resources</h4>
+                <p className="text-slate-600 leading-relaxed">
+                  Access curated mindfulness exercises, articles, and interactive workshops
+                </p>
+              </div>
+            </Card>
+
+            {/* 24/7 AI Support */}
+            <Card className="p-8 bg-white/90 backdrop-blur-sm border border-slate-200/60 hover:border-blue-200/80 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+              <div className="flex flex-col items-center text-center space-y-6">
+                <div className="w-20 h-20 bg-blue-100/80 rounded-2xl mb-4 flex items-center justify-center backdrop-blur-sm">
+                  <svg className="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M6.715 6.711a4.5 4.5 0 010 6.364M9.172 9.172l5.656-5.656M14.828 9.172l-5.656 5.656"/>
+                  </svg>
+                </div>
+                <h4 className="text-2xl font-semibold text-slate-900 mb-2">24/7 AI Support</h4>
+                <p className="text-slate-600 leading-relaxed">
+                  Instant mental health assistance powered by AI, available round-the-clock for immediate guidance
+                </p>
+                <Button
+                  variant="ghost"
+                  className="text-blue-600 hover:bg-blue-50/50 mt-4"
+                  asChild
+                >
+                  <Link href="/ai-support">
+                    Try AI Assistant →
+                  </Link>
+                </Button>
+              </div>
+            </Card>
+          </div>
         </Container>
       </section>
 
       {/* Footer */}
-      <footer className="bg-indigo-600 text-white text-center py-6 mt-12 rounded-t-3xl">
-        <p>© 2025 Shosti. All rights reserved.</p>
-        <div className="space-x-4 mt-4">
-          <a href="https://twitter.com" className="hover:text-indigo-200">Twitter</a>
-          <a href="https://facebook.com" className="hover:text-indigo-200">Facebook</a>
-          <a href="https://instagram.com" className="hover:text-indigo-200">Instagram</a>
-        </div>
+      <footer className="border-t border-slate-200/60 bg-white/80 backdrop-blur-md">
+        <Container className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
+            <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-teal-500 bg-clip-text text-transparent">
+              Shosti
+            </Link>
+             <div className="mt-8 text-center text-slate-500 text-sm">
+            © 2025 Shosti. Compassion in every connection.
+          </div>
+          </div>
+         
+        </Container>
       </footer>
     </div>
   );
