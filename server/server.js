@@ -3,11 +3,15 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import adminAuthRoutes from './routes/adminAuthRoutes.js';
+import attendeeAuthRoutes from "./routes/attendeeAuthRoutes.js";
+import mhpAuthRoutes from "./routes/mhpAuthRoutes.js";
+
 import { verifyToken, restrictTo } from './middleware/authMiddleware.js';
 
 dotenv.config();
 
 const app = express();
+const MONGO_URI = process.env.MONGO_URI;
 
 // Middleware
 app.use(
@@ -20,11 +24,14 @@ app.use(
 app.use(express.json()); // JSON body parsing
 
 // Database connection
-mongoose.connect(process.env.MONGO_URI).then(()=>console.log("Mongo-DB is connected")).catch((e) => console.log(e));
+mongoose.connect(MONGO_URI).then(()=>console.log("Mongo-DB is connected")).catch((e) => console.log(e));
 
 
 // Routes
 app.use('/api/admin', adminAuthRoutes);
+app.use("/api/auth", attendeeAuthRoutes);
+app.use("/api/auth", mhpAuthRoutes);
+
 
 // Protected Routes Example
 app.get('/api/admin/general/stats', 
