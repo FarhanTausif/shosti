@@ -80,7 +80,7 @@ export default function AboutPage() {
             className="bg-gradient-to-r from-indigo-600 to-teal-500 text-white hover:from-indigo-700 hover:to-teal-600 px-8 py-4 text-lg"
             asChild
           >
-            <Link href="/">Get in Touch</Link>
+            <Link href="/contact">Get in Touch</Link>
           </Button>
         </div>
       </main>
