@@ -1,33 +1,48 @@
-import mongoose from 'mongoose';
 import express from 'express';
+import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import authRoutes from './routes/authRoutes.js';
-const app = express();
+import adminAuthRoutes from './routes/adminAuthRoutes.js';
+import { verifyToken, restrictTo } from './middleware/authMiddleware.js';
+
 dotenv.config();
 
-const PORT = process.env.PORT || 5000;
-const MONGO_URI = process.env.MONGO_URI;
+const app = express();
 
+// Middleware
 app.use(
-    cors({
-        origin: process.env.CLIENT_URL,
-        methods: ["GET","POST","DELETE","PUT"],
-        allowedHeaders: ["Content-Type","Authorization"],
-    })
+      cors({
+          origin: process.env.CLIENT_URL,
+          methods: ["GET","POST","DELETE","PUT"],
+          allowedHeaders: ["Content-Type","Authorization"],
+      })
+  );
+app.use(express.json()); // JSON body parsing
+
+// Database connection
+mongoose.connect(process.env.MONGO_URI).then(()=>console.log("Mongo-DB is connected")).catch((e) => console.log(e));
+
+
+// Routes
+app.use('/api/admin', adminAuthRoutes);
+
+// Protected Routes Example
+app.get('/api/admin/general/stats', 
+  verifyToken,
+  restrictTo('general-admin'),
+  (req, res) => {
+    res.json({ stats: 'General admin data' });
+  }
 );
 
-app.use(express.json());
+// Error handling
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Server error' });
+});
 
-//database connection
-
- mongoose.connect(MONGO_URI).
- then(()=>console.log("Mongo-DB is connected")).
- catch((e) => console.log(e));
-
-// Use the routes
-app.use('/api', authRoutes);
-
+// Start server
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
