@@ -31,6 +31,8 @@ mongoose.connect(MONGO_URI).then(()=>console.log("Mongo-DB is connected")).catch
 app.use('/api/admin', adminAuthRoutes);
 app.use("/api/auth", attendeeAuthRoutes);
 app.use("/api/auth", mhpAuthRoutes);
+app.use("/api/attendees", attendeeAuthRoutes);
+app.use("/api/mhps", mhpAuthRoutes);
 
 
 // Protected Routes Example

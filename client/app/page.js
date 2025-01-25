@@ -119,15 +119,6 @@ export default function Home() {
                 <p className="text-slate-600 leading-relaxed">
                   Instant mental health assistance powered by AI, available round-the-clock for immediate guidance
                 </p>
-                <Button
-                  variant="ghost"
-                  className="text-blue-600 hover:bg-blue-50/50 mt-4"
-                  asChild
-                >
-                  <Link href="/ai-support">
-                    Try AI Assistant →
-                  </Link>
-                </Button>
               </div>
             </Card>
           </div>
