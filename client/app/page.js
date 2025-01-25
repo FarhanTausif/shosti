@@ -61,9 +61,9 @@ export default function Home() {
               <Link href="/signup">Start Your Journey</Link>
             </Button>
           </div>
-          <div className="absolute inset-0 opacity-15 [mask-image:radial-gradient(ellipse_at_center,white,transparent)]">
+          {/* <div className="absolute inset-0 opacity-15 [mask-image:radial-gradient(ellipse_at_center,white,transparent)]">
             <div className="absolute inset-0 bg-[url(/grid.svg)] bg-center [mask-image:linear-gradient(180deg,white,transparent)]" />
-          </div>
+          </div> */}
         </div>
       </section>
 
