@@ -58,7 +58,7 @@ export default function Home() {
               size="lg"
               className="bg-gradient-to-r from-indigo-600 to-teal-500 text-white hover:from-indigo-700 hover:to-teal-600 transition-all transform hover:scale-105 shadow-lg hover:shadow-indigo-200/40 px-12 py-6 text-lg"
             >
-              Start Your Journey
+              <Link href="/signup">Start Your Journey</Link>
             </Button>
           </div>
           <div className="absolute inset-0 opacity-15 [mask-image:radial-gradient(ellipse_at_center,white,transparent)]">
