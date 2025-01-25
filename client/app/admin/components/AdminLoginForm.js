@@ -23,7 +23,7 @@ export const AdminLoginForm = ({
             Admin Portal
           </h1>
           <p className="text-sm text-gray-300/90">
-            Enter your credentials to continue
+            Enter your credentials to access admin portal
           </p>
         </div>
 
