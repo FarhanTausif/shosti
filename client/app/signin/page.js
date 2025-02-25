@@ -21,10 +21,9 @@ export default function SignInPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
-
         try {
             // First try attendee login
-            const attendeeRes = await fetch(
+            const attendeeResponse = await fetch(
                 `${process.env.NEXT_PUBLIC_API_URL}/api/attendees/signin`,
                 {
                     method: "POST",
@@ -32,24 +31,17 @@ export default function SignInPage() {
                     body: JSON.stringify(formData),
                 }
             );
-
-            if (attendeeRes.ok) {
+    
+            if (attendeeResponse.ok) {
+                const data = await attendeeResponse.json();
+                localStorage.setItem("userType", "attendee");  // Store role in localStorage
+                localStorage.setItem("token", data.token); // Store the token
                 router.push("/attendee-dashboard");
                 return;
             }
-
-            const attendeeError = await attendeeRes.json();
-            
-            if (attendeeRes.status === 401) {
-                setError(attendeeError.message || "Invalid credentials");
-                return;
-            } else if (attendeeRes.status !== 404) {
-                setError(attendeeError.message || "Login failed");
-                return;
-            }
-
-            // Try MHP login if attendee not found
-            const mhpRes = await fetch(
+    
+            // If attendee login fails, try MHP login
+            const mhpResponse = await fetch(
                 `${process.env.NEXT_PUBLIC_API_URL}/api/mhps/signin`,
                 {
                     method: "POST",
@@ -57,15 +49,18 @@ export default function SignInPage() {
                     body: JSON.stringify(formData),
                 }
             );
-
-            if (mhpRes.ok) {
+    
+            if (mhpResponse.ok) {
+                const data = await mhpResponse.json();
+                localStorage.setItem("userType", "mhp"); // Store role in localStorage
+                localStorage.setItem("token", data.token); // Store the token
                 router.push("/mhp-dashboard");
                 return;
             }
-
-            const mhpError = await mhpRes.json();
+    
+            const mhpError = await mhpResponse.json();
             setError(mhpError.message || "Invalid credentials");
-
+    
         } catch (err) {
             console.error(err);
             setError("Something went wrong. Please try again.");
