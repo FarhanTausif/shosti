@@ -56,7 +56,7 @@ export const signupMHP = async (req, res) => {
         { expiresIn: "1h" }
       );
   
-      res.status(200).json({ message: "Login successful", token, userType: "mhp" });
+      res.status(200).json({ message: "Login successful", token, userType: "mhp", userId: mhp._id, userName: mhp.username });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
