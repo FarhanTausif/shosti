@@ -1,36 +1,45 @@
 "use client";
-
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import AttendeeDashboard from './attendee-dashboard';
-import MHPDashboard from './mhp-dashboard';
-
+import { AttendeeDashboard } from './attendee-dashboard';
+import { MHPDashboard } from './mhp-dashboard';
 export default function DashboardPage({ params }) {
-    const { role, userName } = React.use(params);
-    const router = useRouter();
-    const [userType, setUserType] = useState(null);
+  const router = useRouter();
+  const [userType, setUserType] = useState(null);
+  const { role, userName } = React.use(params);
+  useEffect(() => {
+    const verifyAuth = () => {
+      const storedRole = localStorage.getItem("userType");
+      const storedUserName = localStorage.getItem("userName");
 
-    useEffect(() => {
-        // Get the user role and userName from localStorage
-        const storedRole = localStorage.getItem("userType");
-        const storedUserName = localStorage.getItem("userName");
+      if (!storedRole || !storedUserName) {
+        router.push("/signin");
+        return;
+      }
 
-        // If the role or userName doesn't match, redirect to sign-in
-        if (storedRole !== role || storedUserName !== userName) {
-            router.push("/signin");
-        } else {
-            setUserType(storedRole); // Set the user role
-        }
-    }, [router, role, userName]);
+      if (storedRole !== role || storedUserName !== userName) {
+        router.push("/signin");
+      } else {
+        setUserType(storedRole);
+      }
+    };
 
-    // Conditionally render the appropriate dashboard based on role
-    if (userType === "attendee") {
-        return <AttendeeDashboard userName={userName} />;
-    } else if (userType === "mhp") {
-        return <MHPDashboard userName={userName} />;
-    }
+    verifyAuth();
+  }, [router, role, userName]);
 
-    // Loading state if user role is not determined yet
-    return <div>Loading...</div>;
+  if (!userType) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-pulse text-xl text-gray-600">Loading dashboard...</div>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      {userType === 'attendee' && <AttendeeDashboard userName={userName} />}
+      {userType === 'mhp' && <MHPDashboard userName={userName} />}
+    </>
+  );
 }
