@@ -61,3 +61,64 @@ export const signupMHP = async (req, res) => {
       res.status(500).json({ message: error.message });
     }
   };
+
+  // Fetch MHP Profile
+export const getProfile = async (req, res) => {
+  const { userName } = req.params;  // Extract userName from URL params
+
+  try {
+    const mhp = await MHP.findOne({ username: userName });
+    if (!mhp) {
+      return res.status(404).json({ message: "MHP not found" });
+    }
+
+    res.status(200).json({
+      username: mhp.username,
+      bmdcRegNo: mhp.bmdcRegNo,
+      email: mhp.email,
+      mobileNumber: mhp.mobileNumber,
+      location: mhp.location,
+      rosterOnline: mhp.rosterOnline,
+      rosterOffline: mhp.rosterOffline,
+      education: mhp.education,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Update MHP Profile
+export const updateProfile = async (req, res) => {
+  const { userName } = req.params;  // Extract userName from URL params
+  const { mobileNumber, location, rosterOnline, rosterOffline, education } = req.body;
+
+  try {
+    const mhp = await MHP.findOne({ username: userName });
+    if (!mhp) {
+      return res.status(404).json({ message: "MHP not found" });
+    }
+
+    // Update profile details
+    mhp.mobileNumber = mobileNumber || mhp.mobileNumber;
+    mhp.location = location || mhp.location;
+    mhp.rosterOnline = rosterOnline || mhp.rosterOnline;
+    mhp.rosterOffline = rosterOffline || mhp.rosterOffline;
+    mhp.education = education || mhp.education;
+
+    await mhp.save();
+
+    res.status(200).json({
+      message: "Profile updated successfully",
+      mhp: {
+        username: mhp.username,
+        mobileNumber: mhp.mobileNumber,
+        location: mhp.location,
+        rosterOnline: mhp.rosterOnline,
+        rosterOffline: mhp.rosterOffline,
+        education: mhp.education,
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

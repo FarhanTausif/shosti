@@ -1,16 +1,52 @@
 "use client";
 
+import { ContentManagement } from "./ContentManagement"; 
+import { SessionRequests } from "./SessionRequests";
+import MHPProfile from "./mhp/MHPProfile";
+import { useState } from "react";
+
 export const DashboardLayout = ({ children, role, userName }) => {
+  const [activeSection, setActiveSection] = useState(role === "attendee" ? "resources" : "content");
+
+  const handleSectionChange = (e, section) => {
+    e.preventDefault();
+    setActiveSection(section);
+  };
+
   const navItems = {
     attendee: [
-      { name: 'Resources', href: '#resources' },
-      { name: 'Sessions', href: '#sessions' },
-      { name: 'Professionals', href: '#professionals' }
+      { 
+        name: 'Resources', 
+        href: '#resources', 
+        onClick: (e) => handleSectionChange(e, 'resources') 
+      },
+      { 
+        name: 'Sessions', 
+        href: '#sessions', 
+        onClick: (e) => handleSectionChange(e, 'sessions') 
+      },
+      { 
+        name: 'Professionals', 
+        href: '#professionals',
+        onClick: (e) => e.preventDefault()
+      }
     ],
     mhp: [
-      { name: 'Content', href: '#content' },
-      { name: 'Sessions', href: '#sessions' },
-      { name: 'Profile', href: '#profile' }
+      { 
+        name: 'Content', 
+        href: '#content', 
+        onClick: (e) => handleSectionChange(e, 'content') 
+      },
+      { 
+        name: 'Sessions', 
+        href: '#sessions', 
+        onClick: (e) => handleSectionChange(e, 'sessions') 
+      },
+      { 
+        name: 'Profile', 
+        href: '#profile',
+        onClick: (e) => handleSectionChange(e, 'profile') 
+      }
     ]
   };
 
@@ -30,6 +66,7 @@ export const DashboardLayout = ({ children, role, userName }) => {
               <li key={item.href}>
                 <a
                   href={item.href}
+                  onClick={item.onClick}
                   className="flex items-center p-3 text-slate-600 rounded-xl hover:bg-indigo-50/50 transition-all duration-300 hover:-translate-x-1 hover:text-indigo-600 group"
                 >
                   <span className="mr-2 opacity-70 group-hover:opacity-100">•</span>
@@ -44,7 +81,9 @@ export const DashboardLayout = ({ children, role, userName }) => {
       {/* Main Content */}
       <main className="flex-1 p-8">
         <div className="max-w-7xl mx-auto bg-white/80 backdrop-blur-sm rounded-2xl border border-slate-200/60 p-8 shadow-sm">
-          {children}
+          {activeSection === "content" && <ContentManagement />}
+          {activeSection === "sessions" && <SessionRequests />}
+          {activeSection === "profile" && <MHPProfile userName={userName} />}
         </div>
       </main>
     </div>
