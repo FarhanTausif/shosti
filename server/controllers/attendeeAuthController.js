@@ -55,3 +55,59 @@ export const signinAttendee = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// Fetch Attendee Profile
+export const getAttendeeProfile = async (req, res) => {
+  const { userName } = req.params; // Get userName from URL params
+  try {
+    const attendee = await Attendee.findOne({ username: userName });
+    if (!attendee) {
+      return res.status(404).json({ message: "Attendee not found" });
+    }
+    res.status(200).json({
+      username: attendee.username,
+      email: attendee.email,
+      address: attendee.address,
+      phoneNumber: attendee.phoneNumber,
+      age: attendee.age,
+      sex: attendee.sex,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const updateAttendeeProfile = async (req, res) => {
+  const { userName } = req.params;  // Get userName from URL params
+  // Destructure only the editable fields
+  const { address, phoneNumber, age, sex } = req.body;
+  try {
+    const attendee = await Attendee.findOne({ username: userName });
+    if (!attendee) {
+      return res.status(404).json({ message: "Attendee not found" });
+    }
+
+
+
+    attendee.address = address || attendee.address;
+    attendee.phoneNumber = phoneNumber || attendee.phoneNumber;
+    attendee.age = age || attendee.age;
+    attendee.sex = sex || attendee.sex;
+
+    await attendee.save();
+
+    res.status(200).json({
+      message: "Profile updated successfully",
+      attendee: {
+        username: attendee.username,
+        email: attendee.email,
+        address: attendee.address,
+        phoneNumber: attendee.phoneNumber,
+        age: attendee.age,
+        sex: attendee.sex,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

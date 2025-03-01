@@ -4,32 +4,30 @@ import { ContentManagement } from "./ContentManagement";
 import { SessionRequests } from "./SessionRequests";
 import MHPProfile from "./mhp/MHPProfile";
 import { useState } from "react";
+import { useRouter } from 'next/navigation';
+import AttendeeProfile from "./attendee/AttendeeProfile";
 
 export const DashboardLayout = ({ children, role, userName }) => {
+    const router = useRouter();
   const [activeSection, setActiveSection] = useState(role === "attendee" ? "resources" : "content");
 
   const handleSectionChange = (e, section) => {
     e.preventDefault();
     setActiveSection(section);
   };
+  const handleLogout = () => {
+    
+    localStorage.removeItem('accessToken');
+    router.push('/signin');
+  };
 
   const navItems = {
     attendee: [
-      { 
-        name: 'Resources', 
-        href: '#resources', 
-        onClick: (e) => handleSectionChange(e, 'resources') 
-      },
-      { 
-        name: 'Sessions', 
-        href: '#sessions', 
-        onClick: (e) => handleSectionChange(e, 'sessions') 
-      },
-      { 
-        name: 'Professionals', 
-        href: '#professionals',
-        onClick: (e) => e.preventDefault()
-      }
+      { name: 'Profile', href: '#profile', onClick: (e) => handleSectionChange(e, 'profile') },
+      { name: 'Resources', href: '#resources', onClick: (e) => handleSectionChange(e, 'resources') },
+      { name: 'Sessions', href: '#sessions', onClick: (e) => handleSectionChange(e, 'sessions') },
+      { name: 'Professionals', href: '#professionals', onClick: (e) => e.preventDefault() },
+      { name: 'Logout', href: '#logout', onClick: (e) => handleLogout() },
     ],
     mhp: [
       { 
@@ -46,6 +44,12 @@ export const DashboardLayout = ({ children, role, userName }) => {
         name: 'Profile', 
         href: '#profile',
         onClick: (e) => handleSectionChange(e, 'profile') 
+      }
+      ,
+      { 
+        name: 'Logout', 
+        href: '#logout',
+        onClick: (e) => handleLogout() 
       }
     ]
   };
@@ -81,10 +85,11 @@ export const DashboardLayout = ({ children, role, userName }) => {
       {/* Main Content */}
       <main className="flex-1 p-8">
         <div className="max-w-7xl mx-auto bg-white/80 backdrop-blur-sm rounded-2xl border border-slate-200/60 p-8 shadow-sm">
-          {activeSection === "content" && <ContentManagement />}
-          {activeSection === "sessions" && <SessionRequests />}
-          {activeSection === "profile" && <MHPProfile userName={userName} />}
-        </div>
+        {activeSection === "profile" && role === "attendee" && <AttendeeProfile userName={userName} />}
+        {activeSection === "sessions" && <SessionRequests />}
+        {activeSection === "content" && role === "mhp" && <ContentManagement />}
+        {activeSection === "profile" && role === "mhp" && <MHPProfile userName={userName} />}
+      </div>
       </main>
     </div>
   );
