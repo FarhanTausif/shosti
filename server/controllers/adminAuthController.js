@@ -22,7 +22,8 @@ export const adminLogin = async (req, res) => {
     res.status(200).json({
       accessToken,
       role: admin.role,
-      email: admin.email
+      email: admin.email,
+      userName: admin.name,
     });
 
   } catch (error) {
