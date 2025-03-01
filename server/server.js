@@ -5,6 +5,7 @@ import cors from 'cors';
 import adminAuthRoutes from './routes/adminAuthRoutes.js';
 import attendeeAuthRoutes from "./routes/attendeeAuthRoutes.js";
 import mhpAuthRoutes from "./routes/mhpAuthRoutes.js";
+import chatbotRoutes from "./routes/chatbotRoutes.js";
 
 import { verifyToken, restrictTo } from './middleware/authMiddleware.js';
 
@@ -33,6 +34,7 @@ app.use("/api/auth", attendeeAuthRoutes);
 app.use("/api/auth", mhpAuthRoutes);
 app.use("/api/attendees", attendeeAuthRoutes);
 app.use("/api/mhps", mhpAuthRoutes);
+app.use("/api/chatbot", chatbotRoutes);
 
 
 // Protected Routes Example
