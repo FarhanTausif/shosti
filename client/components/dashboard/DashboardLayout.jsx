@@ -6,6 +6,7 @@ import MHPProfile from "./mhp/MHPProfile";
 import { useState } from "react";
 import { useRouter } from 'next/navigation';
 import AttendeeProfile from "./attendee/AttendeeProfile";
+import Chatbot from "./attendee/Chatbot";
 
 export const DashboardLayout = ({ children, role, userName }) => {
     const router = useRouter();
@@ -91,6 +92,8 @@ export const DashboardLayout = ({ children, role, userName }) => {
         {activeSection === "profile" && role === "mhp" && <MHPProfile userName={userName} />}
       </div>
       </main>
+      {/* Chatbot Component */}
+      {role === "attendee" && <Chatbot />}
     </div>
   );
 };
