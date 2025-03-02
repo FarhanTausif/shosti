@@ -15,6 +15,7 @@ export const DashboardLayout = ({ children, role, userName }) => {
   const handleSectionChange = (e, section) => {
     e.preventDefault();
     setActiveSection(section);
+    router.push(`/dashboard/${role}/${userName}/#${section}`);
   };
   const handleLogout = () => {
     
@@ -27,7 +28,7 @@ export const DashboardLayout = ({ children, role, userName }) => {
       { name: 'Profile', href: '#profile', onClick: (e) => handleSectionChange(e, 'profile') },
       { name: 'Resources', href: '#resources', onClick: (e) => handleSectionChange(e, 'resources') },
       { name: 'Sessions', href: '#sessions', onClick: (e) => handleSectionChange(e, 'sessions') },
-      { name: 'Professionals', href: '#professionals', onClick: (e) => e.preventDefault() },
+      { name: 'Professionals', href: '#professionals', onClick: (e) => handleSectionChange(e, 'professionals') },
       { name: 'Logout', href: '#logout', onClick: (e) => handleLogout() },
     ],
     mhp: [
@@ -87,7 +88,7 @@ export const DashboardLayout = ({ children, role, userName }) => {
       <main className="flex-1 p-8">
         <div className="max-w-7xl mx-auto bg-white/80 backdrop-blur-sm rounded-2xl border border-slate-200/60 p-8 shadow-sm">
         {activeSection === "profile" && role === "attendee" && <AttendeeProfile userName={userName} />}
-        {activeSection === "sessions" && <SessionRequests />}
+        {activeSection === "sessions" && role === "mhp" && <SessionRequests />}
         {activeSection === "content" && role === "mhp" && <ContentManagement />}
         {activeSection === "profile" && role === "mhp" && <MHPProfile userName={userName} />}
       </div>
