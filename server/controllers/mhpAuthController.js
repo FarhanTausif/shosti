@@ -111,6 +111,8 @@ export const updateProfile = async (req, res) => {
       message: "Profile updated successfully",
       mhp: {
         username: mhp.username,
+        bmdcRegNo: mhp.bmdcRegNo,
+        email: mhp.email,
         mobileNumber: mhp.mobileNumber,
         location: mhp.location,
         rosterOnline: mhp.rosterOnline,
