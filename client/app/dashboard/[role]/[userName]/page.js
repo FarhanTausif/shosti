@@ -8,11 +8,22 @@ export default function DashboardPage({ params }) {
   const router = useRouter();
   const [userType, setUserType] = useState(null);
   const { role, userName } = React.use(params);
+  const [email, setEmail] = useState(null);
+
+  useEffect(() => {
+    // Check if localStorage is available (running in the browser)
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const storedEmail = localStorage.getItem("email");
+      console.log("Email: ", storedEmail);
+      setEmail(storedEmail);
+    }
+  }, []);
+
   useEffect(() => {
     const verifyAuth = () => {
       const storedRole = localStorage.getItem("userType");
       const storedUserName = localStorage.getItem("userName");
-
+  
       if (!storedRole || !storedUserName) {
         router.push("/signin");
         return;
@@ -38,8 +49,8 @@ export default function DashboardPage({ params }) {
 
   return (
     <>
-      {userType === 'attendee' && <AttendeeDashboard userName={userName} />}
-      {userType === 'mhp' && <MHPDashboard userName={userName} />}
+      {userType === 'attendee' && <AttendeeDashboard userName={userName} email={email} />}
+      {userType === 'mhp' && <MHPDashboard userName={userName} email={email} />}
     </>
   );
 }

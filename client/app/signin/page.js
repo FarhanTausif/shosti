@@ -38,6 +38,7 @@ export default function SignInPage() {
                 localStorage.setItem("token", data.token);
                 localStorage.setItem("userName", data.userName);
                 localStorage.setItem("userId", data.userId);  // Store user ID
+                localStorage.setItem("email", data.email);
                 router.push(`/dashboard/attendee/${data.userName}`);  // Redirect to Attendee dashboard
                 return;
             }
@@ -58,6 +59,7 @@ export default function SignInPage() {
                 localStorage.setItem("token", data.token);
                 localStorage.setItem("userId", data.userId);  // Store user ID
                 localStorage.setItem("userName", data.userName);
+                localStorage.setItem("email", data.email);
                 router.push(`/dashboard/mhp/${data.userName}`);  // Redirect to MHP dashboard
                 return;
             }
