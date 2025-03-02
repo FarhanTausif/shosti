@@ -15,22 +15,21 @@ const AdminLoginPage = () => {
     setError('');
     
     try {
-      const response = await fetch(`http://localhost:3100/api/admin/login`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
 
       const data = await response.json();
-
+         console.log(data);
       if (response.ok) {
-        // Store token and redirect based on role
         localStorage.setItem('accessToken', data.accessToken);
-        
+        localStorage.setItem('userName', data.userName);
         if (data.role === 'general-admin') {
-          router.push('/admin/general-dashboard');
+          router.push(`/admin/dashboard/general-admin/${data.userName}`);
         } else if (data.role === 'mh-admin') {
-          router.push('/admin/mh-dashboard');
+          router.push(`/admin/dashboard/mh-admin/${data.userName}`);
         }
       } else {
         setError(data.message || 'Authentication failed');

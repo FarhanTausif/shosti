@@ -21,11 +21,13 @@ const seedAdmins = async () => {
   try {
     const admins = [
       {
+        name: 'TausifBillah',
         email: 'general@gmail.com',
         password: await bcrypt.hash('GeneralAdminPassword123!', 10),
         role: 'general-admin',
       },
       {
+        name: 'MustakimMollah',
         email: 'mh@gmail.com',
         password: await bcrypt.hash('MHAdminPassword456!', 10),
         role: 'mh-admin',
