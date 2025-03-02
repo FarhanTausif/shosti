@@ -50,7 +50,7 @@ export const signinAttendee = async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    res.status(200).json({ message: "Login successful", token, userType: "attendee", userId: attendee._id, userName: attendee.username });
+    res.status(200).json({ message: "Login successful", token, userType: "attendee", userId: attendee._id, userName: attendee.username, email: attendee.email });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
