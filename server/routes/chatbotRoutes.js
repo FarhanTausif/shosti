@@ -10,7 +10,7 @@ const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 
 router.post("/chat", async (req, res) => {
   const userMessage = req.body.message;
-  console.log("userMessage: ", userMessage);
+  // console.log("userMessage: ", userMessage);
   try {
     // Initialize the model
     const model = genAI.getGenerativeModel({
@@ -21,7 +21,7 @@ router.post("/chat", async (req, res) => {
     const result = await model.generateContent(userMessage);
 
     // Check the result before sending it to frontend
-    console.log("Gemini API Response:", result);
+    // console.log("Gemini API Response:", result);
 
     // Send the result to the frontend
     res.json({ response: result.response.text() });
