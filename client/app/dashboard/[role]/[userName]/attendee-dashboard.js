@@ -36,6 +36,7 @@ export const AttendeeDashboard = ({ userName, email }) => {
     });
 
     const data = await response.json();
+    
     console.log("Data", data);
     if (response.ok) {
       setMessage("Session requested successfully!"); // Success message
@@ -43,7 +44,16 @@ export const AttendeeDashboard = ({ userName, email }) => {
       setMessage("Failed to request session. Please try again."); // Error message
     }
   };
-
+  useEffect(() => {
+    if (message) {
+      console.log("Message state updated:", message); // Debugging message updates
+      const timer = setTimeout(() => {
+        setMessage("");
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
+  
   return (
     <DashboardLayout role="attendee" userName={userName}>
       <section id="professionals" className="mb-12">
@@ -63,12 +73,15 @@ export const AttendeeDashboard = ({ userName, email }) => {
 
       {/* Display the success/error message */}
       {message && (
-        <div
-          className={`mt-4 p-4 rounded-lg ${message.includes("Failed") ? "bg-red-200 text-red-700" : "bg-green-200 text-green-700"}`}
-        >
-          {message}
-        </div>
-      )}
+  <div
+    className={`fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg ${
+      message.includes("Failed") ? "bg-red-200 text-red-700" : "bg-green-200 text-green-700"
+    }`}
+  >
+    {message}
+  </div>
+)}
+
     </DashboardLayout>
   );
 };
