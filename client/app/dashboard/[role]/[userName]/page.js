@@ -14,7 +14,7 @@ export default function DashboardPage({ params }) {
     // Check if localStorage is available (running in the browser)
     if (typeof window !== 'undefined' && window.localStorage) {
       const storedEmail = localStorage.getItem("email");
-      console.log("Email: ", storedEmail);
+      // console.log("Email: ", storedEmail);
       setEmail(storedEmail);
     }
   }, []);
