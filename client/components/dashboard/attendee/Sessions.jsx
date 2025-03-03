@@ -31,10 +31,10 @@ export const Sessions = ({ email }) => {
         <button onClick={() => setFilter("all")} className="bg-blue-600 text-white py-2 px-4 rounded-full mr-2">
           All Sessions
         </button>
-        <button onClick={() => setFilter("pending")} className="bg-teal-600 text-white py-2 px-4 rounded-full mr-2">
+        <button onClick={() => setFilter("pending")} className="bg-rose-600 text-white py-2 px-4 rounded-full mr-2">
           Pending Sessions
         </button>
-        <button onClick={() => setFilter("approved")} className="bg-indigo-600 text-white py-2 px-4 rounded-full">
+        <button onClick={() => setFilter("approved")} className="bg-emerald-600 text-white py-2 px-4 rounded-full">
           Approved Sessions
         </button>
       </div>
