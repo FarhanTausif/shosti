@@ -1,7 +1,9 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import MHP from "../models/MHP.js";
-
+import { Resend } from "resend";
+import dotenv from 'dotenv';
+dotenv.config();
 // Signup for MHP
 
 export const signupMHP = async (req, res) => {
@@ -56,7 +58,7 @@ export const signupMHP = async (req, res) => {
         { expiresIn: "1h" }
       );
   
-      res.status(200).json({ message: "Login successful", token, userType: "mhp", userId: mhp._id, userName: mhp.username, email: mhp.email });
+      res.status(200).json({ message: "Login successful", token, userType: "mhp", userId: mhp._id, userName: mhp.username, email: mhp.email, status: mhp.status });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -120,6 +122,73 @@ export const updateProfile = async (req, res) => {
         education: mhp.education,
       }
     });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+// Update Registration Status (for approval/rejection)
+export const updateRegistrationStatus = async (req, res) => {
+  // const { userName } = req.params;
+  const { email, status } = req.body; // expected: "approved" or "rejected"
+  
+  // Only allow valid status updates
+  if (!["approved", "rejected"].includes(status)) {
+    return res.status(400).json({ message: "Invalid status value" });
+  }
+  
+  try {
+    const mhp = await MHP.findOne({ email: email });
+    if (!mhp) {
+      return res.status(404).json({ message: "MHP not found" });
+    }
+    mhp.status = status;
+    await mhp.save();
+    const resend = new Resend(`${process.env.RESEND_API_KEY}`);
+    let emailResponse;
+       try {
+      console.log("Sending email to:", mhp.email);
+      console.log("Using API Key:", process.env.RESEND_API_KEY ? "Loaded" : "Missing");
+        console.log("Resend: ",resend);
+      const emailData = {
+        from: "onboarding@resend.dev", // Ensure this sender is verified
+        to: mhp.email, // Can be a string or an array of strings
+        subject: status === "approved" 
+          ? "Shosti: Your Registration is Approved" 
+          : "Shosti: Your Registration is Rejected",
+        html: status === "approved"
+          ? `<h2>Congratulations, ${mhp.username}!</h2>
+             <p>Your registration has been approved by the Mental Health Admin.</p>
+             <p>You can now sign in and complete your profile.</p>
+             <p>Thank you for joining Shosti!</p>`
+          : `<h2>Hello ${mhp.username},</h2>
+             <p>We regret to inform you that your registration was not approved at this time.</p>
+             <p>Please contact support or re-apply if you believe this is an error.</p>`,
+      };
+
+      console.log("Email Payload:", emailData);
+
+     emailResponse = await resend.emails.send(emailData);
+
+      console.log("Email Response:", emailResponse);
+
+    } catch (emailError) {
+      console.error("Error sending email via Resend:", emailError);
+      return res.status(500).json({ message: "Failed to send email", error: emailError.message });
+    }
+
+    res.status(200).json({ message: `MHP registration ${status} successfully`, mhp, emailResponse });
+
+  } catch (error) {
+    console.error("Error updating status:", error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// New endpoint to get pending MHP registration requests
+export const getPendingMHPRequests = async (req, res) => {
+  try {
+    const pendingMHPs = await MHP.find({ status: "pending" });
+    res.status(200).json(pendingMHPs);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

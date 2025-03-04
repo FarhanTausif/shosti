@@ -60,7 +60,23 @@ export default function SignInPage() {
                 localStorage.setItem("userId", data.userId);  // Store user ID
                 localStorage.setItem("userName", data.userName);
                 localStorage.setItem("email", data.email);
-                router.push(`/dashboard/mhp/${data.userName}`);  // Redirect to MHP dashboard
+        
+                const status = data.status; // This field should be "pending", "rejected", or "approved"
+
+      if (status === "pending") {
+        // If the MHP registration is still pending, redirect to a waiting page.
+        alert("You can't sign in now. Wait for MHA Approval!");
+      } else if (status === "rejected") {
+        // If registration is rejected, redirect to a declined page.
+        alert("You are rejected!");
+      } else if (status === "approved") {
+        // If approved, proceed to the MHP profile page.
+        router.push(`/dashboard/mhp/${data.userName}`); 
+      } else {
+        // Fallback: if status is unrecognized, redirect to profile.
+        alert("error");
+      }
+                // Redirect to MHP dashboard
                 return;
             }
 
