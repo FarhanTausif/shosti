@@ -377,6 +377,7 @@ export const MHPSessions = ({ email }) => {
                                 datetime={session.session_date}
                                 status={session.session_status}
                                 sessionType={session.session_type}
+                                sessionID={session._id}
                                 onApprove={() => handleApprove(session._id)}
                                 onDecline={() => handleDecline(session._id)}
                             />

@@ -93,4 +93,22 @@ router.post('/approve/:sessionId', async (req, res) => {
 //   }
 // });
 
+router.post('/updatePaymentStatus/:sessionId', async (req, res) => {
+  const { sessionId } = req.params;
+  const { paymentStatus } = req.body;  // Expecting 'completed' or 'pending'
+
+  try {
+    const session = await Session.findById(sessionId);
+    if (!session) {
+      return res.status(404).json({ error: 'Session not found' });
+    }
+
+    session.payment_status = paymentStatus;
+    await session.save();
+    res.status(200).json({ message: `Payment status updated to ${paymentStatus}` });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to update payment status' });
+  }
+});
+
 export default router;
