@@ -2,8 +2,16 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import Attendee from "../models/Attendee.js";
 
-// Signup for Attendee
 
+export const getAllAttendeeProfile = async (req, res) => {
+  try {
+    const attendees = await Attendee.find();
+    res.status(200).json(attendees);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch attendees" });
+  }
+};
+// Signup for Attendee
 export const signupAttendee = async (req, res) => {
   const { username, email, password } = req.body;
   
