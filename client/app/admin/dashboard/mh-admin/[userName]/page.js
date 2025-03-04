@@ -13,6 +13,7 @@ export default function MHAdminDashboardPage({ params }) {
   useEffect(() => {
  const token = localStorage.getItem('accessToken');
   const decoded = jwtDecode(token);
+  console.log(decoded);
   const storedUserName = localStorage.getItem("userName");
     
     if (!token) {
