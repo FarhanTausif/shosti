@@ -164,7 +164,9 @@ import { DashboardContent } from "../components/general-admin/Dashboard"; // For
 import { AttendeeInformation } from "../components/general-admin/AttendeeInformation"; // For "Attendees Information"
 import { MHPInformation } from "../components/general-admin/MHPInformation"; // For "MHP Information"
 import { SessionsInformation } from "../components/general-admin/SessionsInformation"; // For "Sessions Information"
-
+import { MHADashboard } from "./mh-admin/Dashboard";
+import {Resources} from "./mh-admin/Resources";
+import {MHPRequest} from "./mh-admin/MHPRequests";
 export const AdminDashboardLayout = ({ children, role, userName, email }) => {
   const router = useRouter();
 
@@ -222,19 +224,10 @@ export const AdminDashboardLayout = ({ children, role, userName, email }) => {
       },
     ],
     "mh-admin": [
-      {
-        name: "Dashboard",
-        href: "#dashboard",
-        onClick: (e) => handleSectionChange(e, "dashboard"),
-      },
-      {
-        name: "Logout",
-        href: "#logout",
-        onClick: (e) => {
-          e.preventDefault();
-          handleLogout();
-        },
-      },
+      { name: "Dashboard", href: "#dashboard", onClick: (e) => handleSectionChange(e, "dashboard") },
+      { name: "MHP Request", href: "#mhp-request", onClick: (e) => handleSectionChange(e, "mhp-request") },
+      { name: "Resources", href: "#resources", onClick: (e) => handleSectionChange(e, "resources") },
+      { name: "Logout", href: "#logout", onClick: (e) => { e.preventDefault(); handleLogout(); } },
     ],
   };
 
@@ -286,7 +279,9 @@ export const AdminDashboardLayout = ({ children, role, userName, email }) => {
           {role === "general-admin" && activeSection === "sessions" && (
             <SessionsInformation userName={userName} />
           )}
-          {role === "mh-admin" && activeSection === "dashboard" && children}
+          {role === "mh-admin" && activeSection === "dashboard" && <MHADashboard userName={userName}/>}
+          {role === "mh-admin" && activeSection === "mhp-request" && <MHPRequest />}
+          {role === "mh-admin" && activeSection === "resources" && <Resources />}
         </div>
       </main>
     </div>
