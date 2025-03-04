@@ -47,10 +47,12 @@ export const Sessions = ({ email }) => {
           {filteredSessions.map((session) => (
             <SessionCard
               key={session._id}
-              professional={{ name: session.professional_email }}  // Showing professional name or email
+              professional={{ name: session.professional_email }} 
               datetime={session.session_date}
-              status={session.session_status}
+              sessionStatus={session.session_status}
               recommendations={session.recommendations}
+              sessionID={session._id}
+              paymentStatus={session.payment_status}
             />
           ))}
         </div>
