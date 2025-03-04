@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import MHP from "../models/MHP.js";
-import { Resend } from "resend";
+import { sendEmail } from "../services/emailService.js";
 import dotenv from 'dotenv';
 dotenv.config();
 // Signup for MHP
@@ -143,45 +143,34 @@ export const updateRegistrationStatus = async (req, res) => {
     }
     mhp.status = status;
     await mhp.save();
-    const resend = new Resend(`${process.env.RESEND_API_KEY}`);
-    let emailResponse;
-       try {
-      console.log("Sending email to:", mhp.email);
-      console.log("Using API Key:", process.env.RESEND_API_KEY ? "Loaded" : "Missing");
-        console.log("Resend: ",resend);
-      const emailData = {
-        from: "onboarding@resend.dev", // Ensure this sender is verified
-        to: mhp.email, // Can be a string or an array of strings
-        subject: status === "approved" 
-          ? "Shosti: Your Registration is Approved" 
-          : "Shosti: Your Registration is Rejected",
-        html: status === "approved"
-          ? `<h2>Congratulations, ${mhp.username}!</h2>
-             <p>Your registration has been approved by the Mental Health Admin.</p>
-             <p>You can now sign in and complete your profile.</p>
-             <p>Thank you for joining Shosti!</p>`
-          : `<h2>Hello ${mhp.username},</h2>
-             <p>We regret to inform you that your registration was not approved at this time.</p>
-             <p>Please contact support or re-apply if you believe this is an error.</p>`,
-      };
+   let subject = "";
+   let html = "";
 
-      console.log("Email Payload:", emailData);
+   if (status === "approved") {
+     subject = "Shosti: Your Registration is Approved";
+     html = `
+       <h2>Congratulations, ${mhp.username}!</h2>
+       <p>Your registration has been approved by the Mental Health Admin.</p>
+       <p>You can now sign in and complete your profile.</p>
+       <p>Thank you for joining Shosti!</p>
+     `;
+   } else {
+     subject = "Shosti: Your Registration is Rejected";
+     html = `
+       <h2>Hello ${mhp.username},</h2>
+       <p>We regret to inform you that your registration was not approved at this time.</p>
+       <p>Please contact support or re-apply if you believe this is an error.</p>
+     `;
+   }
 
-     emailResponse = await resend.emails.send(emailData);
+   // Send email using Nodemailer
+   await sendEmail(mhp.email, subject, html);
 
-      console.log("Email Response:", emailResponse);
-
-    } catch (emailError) {
-      console.error("Error sending email via Resend:", emailError);
-      return res.status(500).json({ message: "Failed to send email", error: emailError.message });
-    }
-
-    res.status(200).json({ message: `MHP registration ${status} successfully`, mhp, emailResponse });
-
-  } catch (error) {
-    console.error("Error updating status:", error);
-    res.status(500).json({ message: error.message });
-  }
+   res.status(200).json({ message: `MHP registration ${status} successfully`, mhp });
+ } catch (error) {
+   console.error("Error updating status:", error);
+   res.status(500).json({ message: error.message });
+ }
 };
 
 // New endpoint to get pending MHP registration requests
