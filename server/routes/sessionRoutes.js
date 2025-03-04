@@ -2,6 +2,16 @@ import express from 'express';
 import Session from '../models/Session.js';
 
 const router = express.Router();
+// In your sessions routes file (e.g., routes/session.js)
+
+router.get('/all', async (req, res) => {
+  try {
+    const sessions = await Session.find();
+    res.status(200).json(sessions);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch sessions' });
+  }
+});
 
 router.get('/', async (req, res) => {
   const { professional_email } = req.query;
