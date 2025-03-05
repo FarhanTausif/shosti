@@ -107,6 +107,7 @@ export default {
       animation: {
         float: 'float 6s ease-in-out infinite',
         shake: 'shake 0.5s ease-in-out',
+		bounce: 'bounce 1.5s infinite',
       },
       keyframes: {
         float: {
@@ -117,7 +118,15 @@ export default {
           '0%, 100%': { transform: 'translateX(0)' },
           '25%': { transform: 'translateX(-10px)' },
           '75%': { transform: 'translateX(10px)' },
-        }
+        },
+		bounce: {
+			'0%, 100%': {
+			  transform: 'translateY(-25%)',
+			},
+			'50%': {
+			  transform: 'translateY(0)',
+			},
+		},
       }
   	}
   },
