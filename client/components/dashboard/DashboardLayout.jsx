@@ -2,7 +2,7 @@
 
 import { ContentManagement } from "./ContentManagement"; 
 import MHPProfile from "./mhp/MHPProfile";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from 'next/navigation';
 import AttendeeProfile from "./attendee/AttendeeProfile";
 import Chatbot from "./attendee/Chatbot";
@@ -13,7 +13,13 @@ import { MHPSessions } from "./mhp/MHPSessions";
 export const DashboardLayout = ({ children, role, userName, email }) => {
   const router = useRouter();
   const [activeSection, setActiveSection] = useState(role === "attendee" ? "resources" : "content");
-
+  // On initial mount, check if a hash exists (e.g., #attendees) and update state
+    useEffect(() => {
+      if (typeof window !== "undefined" && window.location.hash) {
+        const hashValue = window.location.hash.slice(1); // remove the '#' symbol
+        setActiveSection(hashValue);
+      }
+    }, []);
   const handleSectionChange = (e, section) => {
     e.preventDefault();
     setActiveSection(section);
