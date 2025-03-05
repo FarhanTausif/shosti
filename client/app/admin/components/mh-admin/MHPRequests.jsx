@@ -43,6 +43,7 @@ export  function MHPRequest() {
       alert(`Request has been ${decision}`);
       // Remove the processed request from the list
       setPendingMHPs(pendingMHPs.filter((mhp) => mhp.username !== userName));
+      window.location.reload();
     } catch (err) {
       console.error(err);
       alert(err.message);
