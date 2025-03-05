@@ -22,7 +22,7 @@ export default function GeneralAdminDashboardPage({ params }) {
     try {
       const decoded = jwtDecode(token);
       if (decoded.role !== "general-admin" || storedUserName !== userName) {
-        console.log("UserName: ",localStorage.getItem("userNamae"));
+        console.log("UserName: ",localStorage.getItem("userName"));
         router.push('/admin');
         console.log("Role mismatch or name")
       } else {

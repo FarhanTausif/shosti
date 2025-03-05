@@ -8,7 +8,8 @@ import mhpAuthRoutes from "./routes/mhpAuthRoutes.js";
 import chatbotRoutes from "./routes/chatbotRoutes.js";
 import sessionRoutes from "./routes/sessionRoutes.js";
 import professionalRoutes from "./routes/professionalRoutes.js";
-
+import Session from './models/Session.js';
+import Attendee from './models/Attendee.js';
 import { verifyToken, restrictTo } from './middleware/authMiddleware.js';
 
 dotenv.config();
@@ -49,6 +50,48 @@ app.get('/api/admin/general/stats',
     res.json({ stats: 'General admin data' });
   }
 );
+
+// Handle payment success callback
+app.post('/success/:sessionId', async (req, res) => {
+  const sessionId  = req.params.sessionId;  // Capture sessionId and redirect_url
+  
+  try {
+    // Update the session payment status to 'completed'
+    const session = await Session.findById(sessionId);
+    
+    if (!session) {
+      return res.status(404).json({ error: 'Session not found' });
+    }
+    
+    // Update the payment status to 'completed'
+    session.payment_status = 'completed';
+    await session.save();
+    
+    const { attendee_email } = session;
+    const attendee = await Attendee.findOne({ email: attendee_email });
+
+    // Redirect back to the original page where the payment was initiated (redirect_url)
+    res.redirect(`${process.env.CLIENT_URL}/dashboard/attendee/${attendee.username}#sessions`);  
+  } catch (error) {
+    console.error("Error updating payment status:", error);
+    res.status(500).json({ error: 'Error updating payment status' });
+  }
+});
+
+
+// Handle payment failure callback
+app.get('/fail', (req, res) => {
+  const { redirect_url } = req.query;
+  console.log("====Failed====");
+  res.redirect(redirect_url);  // Redirect back to the original page or to '/sessions'
+});
+
+// Handle payment cancel callback
+app.get('/cancel', (req, res) => {
+  const { redirect_url } = req.query;
+  console.log("===CANCELED===");
+  res.redirect(redirect_url );  // Redirect back to the original page or to '/sessions'
+});
 
 // Error handling
 app.use((err, req, res, next) => {

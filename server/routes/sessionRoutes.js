@@ -1,8 +1,8 @@
 import express from 'express';
 import Session from '../models/Session.js';
+import { initiatePayment } from '../services/paymentService.js';
 
 const router = express.Router();
-// In your sessions routes file (e.g., routes/session.js)
 
 router.get('/all', async (req, res) => {
   try {
@@ -108,6 +108,51 @@ router.post('/updatePaymentStatus/:sessionId', async (req, res) => {
     res.status(200).json({ message: `Payment status updated to ${paymentStatus}` });
   } catch (err) {
     res.status(500).json({ error: 'Failed to update payment status' });
+  }
+});
+
+// Route to initiate payment
+router.post('/initiatePayment', async (req, res) => {
+  const { sessionId, amount, cus_name, cus_email, cus_address, cus_city, cus_state, cus_postcode, cus_country, cus_phone, ship_name, ship_address, ship_city, ship_state, ship_postcode, ship_country, product_name, product_category, tran_id, redirect_url } = req.body;
+
+  // Find the session in the database using the sessionId
+  const session = await Session.findById(sessionId);
+  console.log("Session: ", session);
+  if (!session) {
+    return res.status(404).json({ error: 'Session not found' });
+  }
+
+  try {
+    // Prepare the session data
+    const sessionData = {
+      amount,
+      tran_id,
+      product_name,
+      product_category,
+      cus_name,
+      cus_email,
+      cus_address,
+      cus_city,
+      cus_state,
+      cus_postcode,
+      cus_country,
+      cus_phone,
+      ship_name,
+      ship_address,
+      ship_city,
+      ship_state,
+      ship_postcode,
+      ship_country,
+      redirect_url,
+      sessionId,
+    };
+
+    // Call the payment service to initiate payment
+    const redirectURL = await initiatePayment(sessionData);  // Call the function to initiate the payment
+    console.log("Redirect URL:", redirectURL);
+    res.status(200).json({ redirectURL });  // Send the redirect URL to the client
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to initiate payment' });
   }
 });
 
