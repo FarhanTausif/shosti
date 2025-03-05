@@ -10,6 +10,9 @@ import sessionRoutes from "./routes/sessionRoutes.js";
 import professionalRoutes from "./routes/professionalRoutes.js";
 import Session from './models/Session.js';
 import Attendee from './models/Attendee.js';
+import resourceRoutes from "./routes/resourcesRoutes.js";
+import signUploadRoutes from "./routes/sign-upload.js";
+import { errorHandler } from "./middleware/error.js";
 import { verifyToken, restrictTo } from './middleware/authMiddleware.js';
 
 dotenv.config();
@@ -40,6 +43,9 @@ app.use("/api/mhps", mhpAuthRoutes);
 app.use("/api/chatbot", chatbotRoutes);
 app.use('/api/sessions', sessionRoutes);
 app.use("/api/professionals", professionalRoutes); 
+app.use("/api/resources", resourceRoutes);
+app.use("/api/sign-upload", signUploadRoutes);
+app.use(errorHandler);
 
 
 // Protected Routes Example

@@ -103,6 +103,8 @@ import Chatbot from "./attendee/Chatbot";
 import { Sessions } from "./attendee/Sessions";
 import { Professionals } from "./attendee/Professionals";
 import { MHPSessions } from "./mhp/MHPSessions";
+import {MHPResourcesManagement} from "./mhp/ResourceManagement"
+import { AttendeeResources } from "./attendee/Resource";
 
 export const DashboardLayout = ({ children, role, userName, email }) => {
   const router = useRouter();
@@ -166,8 +168,8 @@ export const DashboardLayout = ({ children, role, userName, email }) => {
     ],
     mhp: [
       { 
-        name: 'Content', 
-        section: 'content',
+        name: 'Resources', 
+        section: 'resources',
         icon: <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                 <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
                 <path fillRule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clipRule="evenodd" />
@@ -240,11 +242,12 @@ export const DashboardLayout = ({ children, role, userName, email }) => {
       {/* Main Content */}
       <main className="flex-1 p-8">
         <div className="max-w-7xl mx-auto bg-white/90 backdrop-blur-sm rounded-2xl border border-slate-200/60 p-8 shadow-lg">
+        {activeSection === "resources" && role === "attendee" && <AttendeeResources />}
           {activeSection === "profile" && role === "attendee" && <AttendeeProfile userName={userName} />}
           {activeSection === "sessions" && role === "attendee" && <Sessions email={email} />}
           {activeSection === "professionals" && role === "attendee" && <Professionals email={email} />}
           {activeSection === "sessions" && role === "mhp" && <MHPSessions email={email} />}
-          {activeSection === "content" && role === "mhp" && <ContentManagement />}
+          {activeSection === "resources" && role === "mhp" && <MHPResourcesManagement />}
           {activeSection === "profile" && role === "mhp" && <MHPProfile userName={userName} />}
         </div>
       </main>
