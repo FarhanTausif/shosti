@@ -219,7 +219,9 @@ export default function MHPSignup() {
       setIsSuccess(true);
       setTimeout(() => {
         alert("Wait for the approval");
+        router.push("/signin");
       }, 1500);
+      
     } catch (err) {
       setError(err.message);
       setIsSuccess(false);
