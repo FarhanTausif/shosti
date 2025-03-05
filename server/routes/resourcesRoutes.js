@@ -19,22 +19,23 @@ router.get("/", async (req, res) => {
   }
 });
 
-// POST: Create a new resource (article or video)
 router.post("/", async (req, res) => {
-  const { title, type, content, categories, mediaUrl } = req.body;
-  try {
-    const newResource = new Resource({
-      title,
-      type,
-      content: type === "article" ? content : "",
-      mediaUrl: type === "video" ? mediaUrl : "",
-      categories: categories ? JSON.parse(categories) : [],
-    });
-    await newResource.save();
-    res.status(201).json(newResource);
-  } catch (error) {
-    res.status(500).json({ error: "Failed to add resource" });
-  }
-});
+    const { title, headline, type, content, categories, mediaUrl, userName } = req.body;
+    try {
+      const newResource = new Resource({
+        title,
+        headline: type === "article" ? headline : "",
+        type,
+        content: content,
+        mediaUrl: type === "video" ? mediaUrl : "",
+        categories: categories ? JSON.parse(categories) : [],
+        mhpName: userName || "",
+      });
+      await newResource.save();
+      res.status(201).json(newResource);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to add resource" });
+    }
+  });
 
 export default router;
