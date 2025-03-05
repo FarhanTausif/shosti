@@ -52,6 +52,7 @@ export const Sessions = ({ email }) => {
               sessionStatus={session.session_status}
               recommendations={session.recommendations}
               sessionID={session._id}
+              sessionType={session.session_type}
               paymentStatus={session.payment_status}
             />
           ))}
