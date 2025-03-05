@@ -108,7 +108,7 @@ import { AttendeeResources } from "./attendee/Resource";
 
 export const DashboardLayout = ({ children, role, userName, email }) => {
   const router = useRouter();
-  const [activeSection, setActiveSection] = useState(role === "attendee" ? "resources" : "content");
+  const [activeSection, setActiveSection] = useState(role === "attendee" ? "resources" : "sessions");
   
   useEffect(() => {
     if (typeof window !== "undefined" && window.location.hash) {
@@ -247,7 +247,7 @@ export const DashboardLayout = ({ children, role, userName, email }) => {
           {activeSection === "sessions" && role === "attendee" && <Sessions email={email} />}
           {activeSection === "professionals" && role === "attendee" && <Professionals email={email} />}
           {activeSection === "sessions" && role === "mhp" && <MHPSessions email={email} />}
-          {activeSection === "resources" && role === "mhp" && <MHPResourcesManagement />}
+          {activeSection === "resources" && role === "mhp" && <MHPResourcesManagement userName={userName} />}
           {activeSection === "profile" && role === "mhp" && <MHPProfile userName={userName} />}
         </div>
       </main>
