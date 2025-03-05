@@ -40,7 +40,7 @@ export  function MHPRequest() {
       if (!res.ok) {
         throw new Error("Failed to update status");
       }
-      alert("You have : ",decision);
+      alert(`Request has been ${decision}`);
       // Remove the processed request from the list
       setPendingMHPs(pendingMHPs.filter((mhp) => mhp.username !== userName));
     } catch (err) {
