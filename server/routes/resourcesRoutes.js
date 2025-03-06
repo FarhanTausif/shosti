@@ -76,6 +76,7 @@ router.post("/", async (req, res) => {
       await newResource.save();
       res.status(201).json(newResource);
     } catch (error) {
+      console.log("Error from here post route");
       res.status(500).json({ error: "Failed to add resource" });
     }
   });
