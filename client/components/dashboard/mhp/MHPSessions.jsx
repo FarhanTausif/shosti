@@ -375,7 +375,7 @@ export const MHPSessions = ({ email }) => {
                                 key={session._id}
                                 attendee={{ name: session.attendee_email }}
                                 datetime={session.session_date}
-                                status={session.session_status}
+                                sessionStatus={session.session_status}
                                 sessionType={session.session_type}
                                 sessionID={session._id}
                                 paymentStatus={session.payment_status}
