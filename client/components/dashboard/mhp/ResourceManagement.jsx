@@ -371,7 +371,7 @@
 "use client";
 import React, { useState } from "react";
 
-export const MHPResourcesManagement = ({userName}) => {
+export const MHPResourcesManagement = ({userName, email}) => {
   const [title, setTitle] = useState("");
 //    const [mhpName, setMhpName] = useState(""); // New state for MHP's Name
   const [headline, setHeadline] = useState(""); // Headline for articles
@@ -450,6 +450,7 @@ console.log("MHPNAME: ",userName);
       const resourceData = {
         title,
         userName, // MHP's name
+        mhpemail: email,
         headline: type === "article" ? headline : "",
         type,
         content: type === "video" ? videoDescription : content, // For articles and video description

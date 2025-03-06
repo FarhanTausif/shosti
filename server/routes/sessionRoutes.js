@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
   const { professional_email } = req.query;
   try {
     const sessions = await Session.find({ professional_email });
-    console.log("sessions: ", sessions);
+    // console.log("sessions: ", sessions);
     res.status(200).json(sessions);
   } catch (err) {
     res.status(500).json({ error: 'Failed to fetch sessions' });
