@@ -316,7 +316,7 @@ export const MHPSessions = ({ email }) => {
                 </div>
             )}
 
-            <section id="sessions" className="mb-12">
+            <section id="sessions" className="mb-12 min-h-screen">
                 <h2 className="text-3xl font-bold bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent mb-8">
                     Session Requests
                 </h2>

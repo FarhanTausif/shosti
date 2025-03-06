@@ -403,6 +403,10 @@
 //     </div>
 //   );
 // };
+"use client";
+
+// import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export const MHPSessionCard = ({ attendee, datetime, sessionStatus, sessionType, paymentStatus, sessionID, onApprove, onDecline }) => {
   const isPaymentCompleted = paymentStatus === 'completed';
@@ -411,11 +415,12 @@ export const MHPSessionCard = ({ attendee, datetime, sessionStatus, sessionType,
   const sessionDate = new Date(datetime);
   const today = new Date();
   const isToday = sessionDate.toDateString() === today.toDateString();
+  const isPastSession = (sessionDate < today && !isToday);
 
   return (
     <div className="bg-white rounded-xl shadow-lg p-6 mb-4 transition-all duration-200 hover:shadow-xl border border-gray-100">
       {/* Session Schedule Banner */}
-      {isApproved && isPaymentCompleted && (
+      {isApproved && isPaymentCompleted && !isPastSession && (
         <div className="mb-4 p-3 bg-emerald-50 border-l-4 border-emerald-600 rounded-lg animate-bounce">
           <p className="text-sm font-semibold text-emerald-800 flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -491,13 +496,21 @@ export const MHPSessionCard = ({ attendee, datetime, sessionStatus, sessionType,
 
       {isApproved && isPaymentCompleted && isToday && (
         <div className="flex justify-between mt-4">
-          <div className="text-md text-teal-600 font-semibold">Session ID: {sessionID.slice(-5)}</div>
-          <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clipRule="evenodd" />
-            </svg>
-            Join Session
-          </button>
+          <div className="text-md text-teal-600 font-semibold">Session ID: {sessionID}</div>
+          <Link legacyBehavior
+            href={`/room/${sessionID}`} // Dynamic room link
+            passHref
+          >
+            <a target="_blank">  
+              <button 
+                className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clipRule="evenodd" />
+                </svg>
+                Join Session
+              </button>
+            </a>
+          </Link>
         </div>
       )}
     </div>
