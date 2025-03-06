@@ -20,6 +20,7 @@ const ResourceSchema = new mongoose.Schema({
   content: { type: String }, // For articles
   mediaUrl: { type: String }, // For video URL from Cloudinary
   categories: [{ type: String }], // e.g., ["Stress Management", "Anxiety", ...]
+  mhpEmail: { type: String, required: true },
   mhpName: { type: String }, 
   createdAt: { type: Date, default: Date.now },
 });

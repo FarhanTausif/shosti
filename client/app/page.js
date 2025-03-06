@@ -142,3 +142,47 @@ export default function Home() {
     </div>
   );
 }
+
+// video call element
+// "use client";
+
+// import { useState } from "react";
+// import { useRouter } from "next/navigation";
+
+// export default function HomePage() {
+//   const [roomID, setRoomID] = useState("");
+//   const router = useRouter();
+
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//     if (roomID.trim() !== "") {
+//       router.push(`/room/${roomID.trim()}`);
+//     }
+//   };
+
+//   return (
+//     <div
+//       style={{
+//         display: "flex",
+//         justifyContent: "center",
+//         alignItems: "center",
+//         height: "100vh",
+//       }}
+//     >
+//       <form onSubmit={handleSubmit}>
+//         <h1>Join Video Call</h1>
+//         <input
+//           type="text"
+//           placeholder="Enter Room ID"
+//           value={roomID}
+//           onChange={(e) => setRoomID(e.target.value)}
+//           required
+//           style={{ padding: "0.5rem", fontSize: "1rem" }}
+//         />
+//         <button type="submit" style={{ padding: "0.5rem 1rem", marginLeft: "0.5rem" }}>
+//           Join
+//         </button>
+//       </form>
+//     </div>
+//   );
+// }

@@ -37,6 +37,33 @@ export const ViewResources = () => {
     };
     fetchResources();
   }, [filter]);
+  const handleDelete = async (id) => {
+    console.log("id from client: ",id);
+    const confirmDelete = window.confirm("Are you sure you want to delete this resource?");
+    if (!confirmDelete) return;
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/resources/${id}`,
+        {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ mhpEmail: "mh@gmail.com" }), // Ensure only the owner can delete
+        }
+      );
+
+      const result = await response.json();
+      console.log(result);
+      if (response.ok) {
+        setResources(resources.filter((resource) => resource._id !== id)); // Remove from UI
+      } else {
+        alert(result.message || "Failed to delete resource.");
+      }
+    } catch (error) {
+      console.error("Error deleting resource", error);
+      alert("An error occurred while deleting.");
+    }
+  };
 
   return (
     <div>
@@ -83,6 +110,12 @@ export const ViewResources = () => {
                   <video controls className="mt-2 w-full" src={resource.mediaUrl} />
                 </>
               ) : null}
+              <button
+                onClick={() => handleDelete(resource._id)}
+                className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+              >
+                Delete
+              </button>
             </div>
           ))}
         </div>
