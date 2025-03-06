@@ -9,6 +9,16 @@ export default function MHAdminDashboardPage({ params }) {
   const router = useRouter();
   const { userName } = React.use(params);
   const [authVerified, setAuthVerified] = useState(false);
+  const [email, setEmail] = useState(null);
+  
+    useEffect(() => {
+      // Check if localStorage is available (running in the browser)
+      if (typeof window !== 'undefined' && window.localStorage) {
+        const storedEmail = localStorage.getItem("email");
+        // console.log("Email: ", storedEmail);
+        setEmail(storedEmail);
+      }
+    }, []);
   
   useEffect(() => {
  const token = localStorage.getItem('accessToken');
@@ -42,5 +52,5 @@ export default function MHAdminDashboardPage({ params }) {
     );
   }
 
-  return <MHAdminDashboard userName={userName} />;
+  return <MHAdminDashboard userName={userName} email={email}/>;
 }

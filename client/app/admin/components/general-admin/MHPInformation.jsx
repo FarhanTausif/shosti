@@ -94,7 +94,7 @@ export const MHPInformation = () => {
       )}
 
       {/* Main Content */}
-      <section id="mhp" className="py-12">
+      <section id="mhp" className="py-12 h-screen">
         <h2 className="text-4xl font-extrabold bg-gradient-to-r from-indigo-600 to-teal-500 bg-clip-text text-transparent mb-12 text-center">
           Mental Health Professionals
         </h2>

@@ -86,3 +86,23 @@ body {
 .animate-fade-in {
   animation: fade-in 0.3s ease-out;
 }
+/* Custom Scrollbar for Dropdown */
+select::-webkit-scrollbar {
+  width: 8px;
+  background: #f1f5f9;
+}
+
+select::-webkit-scrollbar-thumb {
+  background: #c7d2fe;
+  border-radius: 4px;
+}
+
+select::-webkit-scrollbar-thumb:hover {
+  background: #a5b4fc;
+}
+
+/* Firefox Scrollbar */
+select {
+  scrollbar-width: thin;
+  scrollbar-color: #c7d2fe #f1f5f9;
+}
