@@ -404,9 +404,10 @@
 //   );
 // };
 
-export const MHPSessionCard = ({ attendee, datetime, status, sessionType, paymentStatus, sessionID, onApprove, onDecline }) => {
+export const MHPSessionCard = ({ attendee, datetime, sessionStatus, sessionType, paymentStatus, sessionID, onApprove, onDecline }) => {
   const isPaymentCompleted = paymentStatus === 'completed';
-  const isApproved = status === 'approved';
+  const isApproved = sessionStatus === 'approved';
+  const isDeclined = sessionStatus === 'declined';
   const sessionDate = new Date(datetime);
   const today = new Date();
   const isToday = sessionDate.toDateString() === today.toDateString();
@@ -415,7 +416,7 @@ export const MHPSessionCard = ({ attendee, datetime, status, sessionType, paymen
     <div className="bg-white rounded-xl shadow-lg p-6 mb-4 transition-all duration-200 hover:shadow-xl border border-gray-100">
       {/* Session Schedule Banner */}
       {isApproved && isPaymentCompleted && (
-        <div className="mb-4 p-3 bg-emerald-50 border-l-4 border-emerald-600 rounded-lg">
+        <div className="mb-4 p-3 bg-emerald-50 border-l-4 border-emerald-600 rounded-lg animate-bounce">
           <p className="text-sm font-semibold text-emerald-800 flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
               <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
@@ -447,7 +448,7 @@ export const MHPSessionCard = ({ attendee, datetime, status, sessionType, paymen
               </svg>
               {sessionType.charAt(0).toUpperCase() + sessionType.slice(1)} Session
             </p>
-            <p className="text-sm text-gray-600 flex items-center gap-2">
+            {!isDeclined && (<p className="text-sm text-gray-600 flex items-center gap-2">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
               </svg>
@@ -457,15 +458,15 @@ export const MHPSessionCard = ({ attendee, datetime, status, sessionType, paymen
                 paymentStatus === 'pending' ? 'text-amber-600' :
                 'text-red-600'
               }`}></span>
-            </p>
+            </p>)}
           </div>
         </div>
-        <span className={`px-3 py-1 rounded-full text-sm font-medium ${status === 'approved' ? 'bg-green-100 text-green-800' : status === 'declined' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800'}`}>
-          {status.charAt(0).toUpperCase() + status.slice(1)}
+        <span className={`px-3 py-1 rounded-full text-sm font-medium ${sessionStatus === 'approved' ? 'bg-green-100 text-green-800' : sessionStatus === 'declined' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800'}`}>
+          {sessionStatus.charAt(0).toUpperCase() + sessionStatus.slice(1)}
         </span>
       </div>
 
-      {status === "pending" && (
+      {sessionStatus === "pending" && (
         <div className="flex gap-2 mt-4 justify-end">
           <button
             onClick={onApprove}

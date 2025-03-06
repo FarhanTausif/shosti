@@ -350,7 +350,7 @@ export const SessionCard = ({ professional, datetime, sessionStatus, recommendat
 
       <div className="mt-6 flex justify-between items-center">
         {isApproved && isPaymentCompleted && isToday && (
-          <div className="text-sm text-gray-500">
+          <div className="text-md text-teal-600 font-semibold">
             Session ID: {sessionID.slice(-5)}
           </div>
         )}
