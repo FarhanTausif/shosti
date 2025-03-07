@@ -302,8 +302,66 @@ export const MHPSessions = ({ email }) => {
         if (filter === "pending") return session.session_status === "pending";
         if (filter === "approved") return session.session_status === "approved";
         if (filter === "declined") return session.session_status === "declined";
+        if (filter === "completed") return session.session_status === "completed";
         return true;
     });
+
+    const handleCompleteSession = async (sessionId) => {
+        try {
+          const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/sessions/complete/${sessionId}`, {
+            method: "POST",
+          });
+          const data = await response.json();
+          console.log("Data: ", data);
+          if (response.ok) {
+            // alert(data.message);
+            // Update session status in the UI, e.g., refresh sessions list
+          } else {
+            alert("Error: " + data.error);
+          }
+        } catch (error) {
+          alert("Error completing session");
+        }
+    };
+
+    // const handleProvideRecommendation = async (sessionId, recommendation) => {
+    //     try {
+    //       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/sessions/recommendations/${sessionId}`, {
+    //         method: "POST",
+    //         headers: { "Content-Type": "application/json" },
+    //         body: JSON.stringify({ recommendations: recommendation }),
+    //       });
+    //       const data = await response.json();
+    //       if (response.ok) {
+    //         alert(data.message);
+    //         // Update the UI with the new recommendation
+    //       } else {
+    //         alert("Error: " + data.error);
+    //       }
+    //     } catch (error) {
+    //       alert("Error providing recommendation");
+    //     }
+    //   };
+
+    const handleProvideRecommendation = async (sessionId, recommendation) => {
+        try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/sessions/recommendations/${sessionId}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ recommendations: recommendation }),
+        });
+        
+        if (response.ok) {
+            // Refresh session data instead of showing alert
+            const updatedSessions = sessionRequests.map(session => 
+            session._id === sessionId ? {...session, recommendations: recommendation} : session
+            );
+            setSessionRequests(updatedSessions);
+        }
+        } catch (error) {
+        console.error("Error providing recommendation:", error);
+        }
+    };
 
     return (
         <div>
@@ -325,7 +383,7 @@ export const MHPSessions = ({ email }) => {
                     <button 
                         onClick={() => setFilter("all")}
                         className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                            filter === "all" ? "bg-zinc-600 text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                            filter === "all" ? "bg-indigo-600 text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                         }`}
                     >
                         All Sessions
@@ -362,6 +420,14 @@ export const MHPSessions = ({ email }) => {
                     >
                         Declined Sessions
                     </button>
+                    <button 
+                        onClick={() => setFilter("completed")}
+                        className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                            filter === "completed" ? "bg-lime-600 text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                        }`}
+                    >
+                        Completed Sessions
+                    </button>
                 </div>
 
                 <div className="space-y-4">
@@ -379,8 +445,11 @@ export const MHPSessions = ({ email }) => {
                                 sessionType={session.session_type}
                                 sessionID={session._id}
                                 paymentStatus={session.payment_status}
+                                recommendations={session.recommendations}
                                 onApprove={() => handleApprove(session._id)}
                                 onDecline={() => handleDecline(session._id)}
+                                onComplete={() => handleCompleteSession(session._id)}
+                                onProvideRecommendation={handleProvideRecommendation}
                             />
                         ))
                     )}

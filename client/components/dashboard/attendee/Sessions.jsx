@@ -34,8 +34,11 @@ export const Sessions = ({ email }) => {
         <button onClick={() => setFilter("pending")} className="bg-rose-600 text-white py-2 px-4 rounded-full mr-2">
           Pending Sessions
         </button>
-        <button onClick={() => setFilter("approved")} className="bg-emerald-600 text-white py-2 px-4 rounded-full">
+        <button onClick={() => setFilter("approved")} className="bg-emerald-600 text-white py-2 px-4 rounded-full mr-2">
           Approved Sessions
+        </button>
+        <button onClick={() => setFilter("completed")} className="bg-green-600 px-4 py-2 bg-green-600 text-white rounded-full">
+          Completed Sessions
         </button>
       </div>
 
