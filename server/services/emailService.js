@@ -29,3 +29,19 @@ export const sendEmail = async (to, subject, html) => {
     throw error;
   }
 };
+export const sendOTP = async (email, otp) => {
+  try {
+    const info = await transporter.sendMail({
+      from: `${process.env.EMAIL_USER}`, // Sender address
+      to: email, // Receiver email
+      subject: "Password Reset OTP", // Subject line
+      html: `<h2>Your OTP for password reset is: ${otp}<h2>`, // HTML body content
+    });
+
+    console.log("Email sent: ", info.response);
+    return info;
+  } catch (error) {
+    console.error("Error sending email:", error);
+    throw error;
+  }
+};

@@ -12,6 +12,7 @@ import Session from './models/Session.js';
 import Attendee from './models/Attendee.js';
 import resourceRoutes from "./routes/resourcesRoutes.js";
 import signUploadRoutes from "./routes/sign-upload.js";
+import forgetRoutes from "./routes/forgetRoutes.js"
 import { errorHandler } from "./middleware/error.js";
 import { verifyToken, restrictTo } from './middleware/authMiddleware.js';
 
@@ -40,6 +41,7 @@ app.use("/api/auth", attendeeAuthRoutes);
 app.use("/api/auth", mhpAuthRoutes);
 app.use("/api/attendees", attendeeAuthRoutes);
 app.use("/api/mhps", mhpAuthRoutes);
+app.use("/api/forgot",forgetRoutes);
 app.use("/api/chatbot", chatbotRoutes);
 app.use('/api/sessions', sessionRoutes);
 app.use("/api/professionals", professionalRoutes); 
