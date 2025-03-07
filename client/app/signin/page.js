@@ -155,7 +155,9 @@ export default function SignInPage() {
                                             Sign In
                                         </Button>
                                     </form>
-        
+                                    <button onClick={() => router.push('/forgot-password')} className="text-indigo-600 hover:underline text-sm">
+                                        Forgot Password?      
+                                    </button>
                                     <p className="text-center text-sm text-slate-600">
                                         Don't have an account?{" "}
                                         <Link href="/signup" className="text-indigo-600 hover:underline">
