@@ -108,6 +108,7 @@ export default {
         float: 'float 6s ease-in-out infinite',
         shake: 'shake 0.5s ease-in-out',
 		bounce: 'bounce 1.5s infinite',
+		'slide-down': 'slide-down 0.3s ease-out',
       },
       keyframes: {
         float: {
@@ -126,6 +127,16 @@ export default {
 			'50%': {
 			  transform: 'translateY(0)',
 			},
+		},
+		'slide-down': {
+			'0%': { 
+			  opacity: '0',
+			  transform: 'translateY(-10px)'
+			},
+			'100%': { 
+			  opacity: '1',
+			  transform: 'translateY(0)'
+			}
 		},
       }
   	}

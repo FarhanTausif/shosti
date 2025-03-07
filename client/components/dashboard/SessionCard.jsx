@@ -237,6 +237,7 @@ export const SessionCard = ({ professional, datetime, sessionStatus, recommendat
   const today = new Date();
   const isToday = sessionDate.toDateString() === today.toDateString();
   const isPastSession = (sessionDate < today && !isToday);
+  const [showFullRecommendation, setShowFullRecommendation] = useState(false);
 
   const handlePayment = async () => {
     setLoading(true);
@@ -337,18 +338,48 @@ export const SessionCard = ({ professional, datetime, sessionStatus, recommendat
               }`}></span>      
           </p>)}
         </div>
-        <span className={`px-3 py-1 rounded-full text-sm font-medium ${sessionStatus === 'approved' ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800'}`}>
+        <span className={`px-3 py-1 rounded-full text-sm font-medium ${sessionStatus === 'approved' ? 'bg-indigo-100 text-indigo-800' : sessionStatus === 'pending' ? 'bg-red-100 text-red-800' : 'bg-emerald-100 text-emerald-800 '}`}>
           {sessionStatus.charAt(0).toUpperCase() + sessionStatus.slice(1)}
         </span>
       </div>
-
+      
       {recommendations && (
-        <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-100">
-          <p className="text-sm text-blue-800">
-            <span className="font-medium">Professional Notes:</span> {recommendations}
-          </p>
-        </div>
-      )}
+            <div className="mt-6 bg-indigo-50 rounded-xl p-4 border border-indigo-100">
+              <div className="flex items-start gap-3">
+                <div className="flex-shrink-0 p-2 bg-indigo-100 rounded-lg">
+                  <svg 
+                    className="w-5 h-5 text-indigo-600" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                </div>
+                <div className="flex-1">
+                  <h4 className="text-sm font-semibold text-indigo-800 mb-2">
+                    Professional Notes
+                  </h4>
+                  <p className="text-gray-700 text-sm leading-relaxed">
+                    {recommendations.length > 200 && !showFullRecommendation ? (
+                      <>
+                        {recommendations.slice(0, 200).replace(/\s+\S*$/, '')}
+                        <span className="text-gray-400">...</span>
+                      </>
+                    ) : recommendations}
+                  </p>
+                  {recommendations.length > 200 && (
+                    <button
+                      onClick={() => setShowFullRecommendation(!showFullRecommendation)}
+                      className="text-indigo-600 hover:text-indigo-700 text-sm mt-2 underline underline-offset-2"
+                    >
+                      {showFullRecommendation ? 'Show less' : 'Read full recommendation'}
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
 
       <div className="mt-6 flex justify-between items-center">
         {isApproved && isPaymentCompleted && isToday && (

@@ -74,24 +74,42 @@ router.post('/approve/:sessionId', async (req, res) => {
   }
 });
 
-// router.post('/recommendations/:sessionId', async (req, res) => {
-//   const { sessionId } = req.params;
-//   const { recommendations } = req.body;
+router.post('/complete/:sessionId', async (req, res) => {
+  const { sessionId } = req.params;
+  try {
+    const session = await Session.findById(sessionId);
+    if (!session) {
+      return res.status(404).json({ error: 'Session not found' });
+    }
 
-//   try {
-//     const session = await Session.findById(sessionId);
-//     if (session) {
-//       session.recommendations = recommendations;
-//       session.session_status = 'completed';
-//       await session.save();
-//       res.status(200).json({ message: 'Recommendations added successfully!' });
-//     } else {
-//       res.status(404).json({ error: 'Session not found' });
-//     }
-//   } catch (err) {
-//     res.status(500).json({ error: 'Failed to add recommendations' });
-//   }
-// });
+    session.session_status = 'completed';
+    await session.save();
+    
+    console.log("Session after completion: ", session);
+    res.status(200).json({ message: 'Session marked as completed successfully!' });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to mark session as complete' });
+  }
+});
+
+router.post('/recommendations/:sessionId', async (req, res) => {
+  const { sessionId } = req.params;
+  const { recommendations } = req.body;
+
+  try {
+    const session = await Session.findById(sessionId);
+    if (!session) {
+      return res.status(404).json({ error: 'Session not found' });
+    }
+
+    session.recommendations = recommendations;
+    await session.save();
+    
+    res.status(200).json({ message: 'Recommendation added successfully!' });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to add recommendation' });
+  }
+});
 
 router.post('/updatePaymentStatus/:sessionId', async (req, res) => {
   const { sessionId } = req.params;
