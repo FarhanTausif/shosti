@@ -101,7 +101,7 @@ export default function Home() {
                 </div>
                 <h4 className="text-2xl font-semibold text-slate-900 mb-2">Guided Resources</h4>
                 <p className="text-slate-600 leading-relaxed">
-                  Access curated mindfulness exercises, articles, and interactive workshops
+                  Access curated mindfulness exercises, articles, podcasts and videos
                 </p>
               </div>
             </Card>

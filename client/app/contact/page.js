@@ -75,7 +75,7 @@ export default function ContactPage() {
                     <div>
                       <p className="font-medium text-slate-900">Email</p>
                       <a href="mailto:support@shosti.com" className="text-indigo-600 hover:underline">
-                        support@shosti.com
+                        mustakim.mohsin7210@gmail.com
                       </a>
                     </div>
                   </div>
@@ -89,7 +89,7 @@ export default function ContactPage() {
                     <div>
                       <p className="font-medium text-slate-900">Emergency Support</p>
                       <a href="tel:+11234567890" className="text-indigo-600 hover:underline">
-                        +1 (123) 456-7890
+                        01740790455
                       </a>
                     </div>
                   </div>

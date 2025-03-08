@@ -54,7 +54,7 @@ export default function AboutPage() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-12">
-          <Card className="p-8 bg-white/90 backdrop-blur-sm border border-slate-200/60">
+          <Card className="p-8 bg-white/90 backdrop-blur-sm border border-slate-200/60  hover:border-indigo-200/80 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2" >
             <h3 className="text-2xl font-semibold text-slate-900 mb-4">Our Mission</h3>
             <p className="text-slate-600 leading-relaxed">
               At Shosti, we believe everyone deserves accessible mental health support. 
@@ -64,7 +64,7 @@ export default function AboutPage() {
             </p>
           </Card>
 
-          <Card className="p-8 bg-white/90 backdrop-blur-sm border border-slate-200/60">
+          <Card className="p-8 bg-white/90 backdrop-blur-sm border border-slate-200/60  hover:border-indigo-200/80 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
             <h3 className="text-2xl font-semibold text-slate-900 mb-4">Our Team</h3>
             <p className="text-slate-600 leading-relaxed">
               A diverse team of mental health professionals, technologists, and designers 
