@@ -16,8 +16,8 @@ export const initiatePayment = async (sessionData) => {
     currency: 'BDT',  
     tran_id: sessionData.tran_id,  // Unique transaction ID
     success_url: `${process.env.SERVER_URL}/success/${sessionData.sessionId}`,  // Redirect URL for success
-    fail_url: `${process.env.SERVER_URL}/fail`,  // Redirect URL for failure
-    cancel_url: `${process.env.SERVER_URL}/cancel`,  // Redirect URL for cancellation
+    fail_url: `${process.env.SERVER_URL}/fail/${sessionData.sessionId}`,  // Redirect URL for failure
+    cancel_url: `${process.env.SERVER_URL}/cancel/${sessionData.sessionId}`,  // Redirect URL for cancellation
     ipn_url: `${process.env.SERVER_URL}/ipn`,  // Instant Payment Notification (Optional)
     shipping_method: 'Courier',
     product_name: sessionData.product_name,

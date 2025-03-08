@@ -1,9 +1,7 @@
-// server/routes/resources.js
 import express from "express";
 import { addResource, deleteResource, getResource, getResourcesByMhpEmail } from "../controllers/resourceController.js";
 
 const router = express.Router();
-
 
 router.get("/", getResource);
 router.get("/mr", getResourcesByMhpEmail);
