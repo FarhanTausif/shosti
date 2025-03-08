@@ -281,7 +281,7 @@ export const SessionCard = ({ professional, datetime, sessionStatus, recommendat
   return (
     <div className="bg-white rounded-xl shadow-md p-6 mb-4 transition-all duration-200 hover:shadow-lg border border-gray-100">
       {/* Session Schedule Banner */}
-      {isApproved && isPaymentCompleted && !isPastSession && (
+      {isApproved && isPaymentCompleted && !isPastSession && isOffline && (
         <div className="mb-4 p-3 bg-blue-50 border-l-4 border-blue-600 rounded-lg animate-bounce">
           <p className="text-sm font-semibold text-blue-800 flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
