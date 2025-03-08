@@ -94,7 +94,7 @@
 // };
 "use client";
 
-import { ContentManagement } from "./ContentManagement";
+
 import MHPProfile from "./mhp/MHPProfile";
 import { useState, useEffect } from "react";
 import { useRouter } from 'next/navigation';
@@ -107,7 +107,7 @@ import {MHPResourcesManagement} from "./mhp/ResourceManagement"
 import { AttendeeResources } from "./attendee/Resource";
 import { MyResources } from "./mhp/MyResources";
 
-export const DashboardLayout = ({ children, role, userName, email }) => {
+export const DashboardLayout = ({ role, userName, email }) => {
   const router = useRouter();
   const [activeSection, setActiveSection] = useState(role === "attendee" ? "resources" : "sessions");
   

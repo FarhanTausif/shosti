@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { ProfessionalCard } from "@/components/dashboard/ProfessionalCard"; // Importing the ProfessionalCard for displaying each professional
+import { ProfessionalCard } from "@/components/dashboard/attendee/ProfessionalCard"; // Importing the ProfessionalCard for displaying each professional
 
 export const Professionals = ({ email }) => {
     const [professionals, setProfessionals] = useState([]);

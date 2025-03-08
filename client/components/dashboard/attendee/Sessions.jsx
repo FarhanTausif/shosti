@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { SessionCard } from "@/components/dashboard/SessionCard";  // Importing the session card for displaying sessions
+import { SessionCard } from "@/components/dashboard/attendee/SessionCard";  // Importing the session card for displaying sessions
 
 export const Sessions = ({ email }) => {
   const [sessions, setSessions] = useState([]);  // Track all sessions including approved ones
