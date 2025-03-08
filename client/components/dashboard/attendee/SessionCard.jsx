@@ -230,6 +230,7 @@ import Link from "next/link";
 
 export const SessionCard = ({ professional, datetime, sessionStatus, recommendations, paymentStatus, sessionID, sessionType }) => {
   const isPaymentCompleted = paymentStatus === 'completed';
+  const isPaymentOffline = sessionType === 'offline';
   const isApproved = sessionStatus === 'approved';
   const isDeclined = sessionStatus === 'declined';
   const isOffline = sessionType === 'offline';
@@ -281,7 +282,7 @@ export const SessionCard = ({ professional, datetime, sessionStatus, recommendat
   return (
     <div className="bg-white rounded-xl shadow-md p-6 mb-4 transition-all duration-200 hover:shadow-lg border border-gray-100">
       {/* Session Schedule Banner */}
-      {isApproved && isPaymentCompleted && !isPastSession && isOffline && (
+      {isApproved && (isPaymentCompleted || isPaymentOffline) && !isPastSession && (
         <div className="mb-4 p-3 bg-blue-50 border-l-4 border-blue-600 rounded-lg animate-bounce">
           <p className="text-sm font-semibold text-blue-800 flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -305,9 +306,6 @@ export const SessionCard = ({ professional, datetime, sessionStatus, recommendat
             Session with {professional.name}
           </h3>
           <p className="text-sm text-gray-600 flex items-center gap-2">
-            {/* <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-              <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
-            </svg> */}
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
                  <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
             </svg>
