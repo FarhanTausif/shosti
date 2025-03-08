@@ -12,7 +12,9 @@ export const Sessions = ({ email }) => {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/sessions/attendee?attendee_email=${email}`);
       const data = await response.json();
       console.log("Sessions:", data);
-      setSessions(data);  // Update sessions to show approved ones
+      // Sort the sessions from the latest to the past (descending order)
+      const sortedSessions = data.sort((a, b) => new Date(b.session_date) - new Date(a.session_date));
+      setSessions(sortedSessions);  
     };
     fetchSessions();
   }, [email]);

@@ -221,7 +221,8 @@ export const MHPSessions = ({ email }) => {
         const fetchSessionRequests = async () => {
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/sessions?professional_email=${email}`);
             const data = await response.json();
-            setSessionRequests(data);
+            const sortedSessions = data.sort((a, b) => new Date(b.session_date) - new Date(a.session_date));
+            setSessionRequests(sortedSessions); 
         };
         fetchSessionRequests();
     }, [email]);
@@ -319,29 +320,11 @@ export const MHPSessions = ({ email }) => {
           } else {
             alert("Error: " + data.error);
           }
+          window.location.reload();
         } catch (error) {
           alert("Error completing session");
         }
     };
-
-    // const handleProvideRecommendation = async (sessionId, recommendation) => {
-    //     try {
-    //       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/sessions/recommendations/${sessionId}`, {
-    //         method: "POST",
-    //         headers: { "Content-Type": "application/json" },
-    //         body: JSON.stringify({ recommendations: recommendation }),
-    //       });
-    //       const data = await response.json();
-    //       if (response.ok) {
-    //         alert(data.message);
-    //         // Update the UI with the new recommendation
-    //       } else {
-    //         alert("Error: " + data.error);
-    //       }
-    //     } catch (error) {
-    //       alert("Error providing recommendation");
-    //     }
-    //   };
 
     const handleProvideRecommendation = async (sessionId, recommendation) => {
         try {
