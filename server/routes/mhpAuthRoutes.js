@@ -10,10 +10,9 @@ router.post("/signin", signinMHP);
 router.get("/requests", getPendingMHPRequests);
 router.put("/status/:userName", updateRegistrationStatus);
 // Profile routes
-router.get("/:userName", getProfile);  // GET request to fetch profile by username
-router.put("/:userName", updateProfile);  // PUT request to update profile by username
-// New route to update registration status (approve/reject)
-// New route to fetch pending registration requests
+router.get("/:userName", getProfile);  
+router.put("/:userName", updateProfile);  
+
 
 
 

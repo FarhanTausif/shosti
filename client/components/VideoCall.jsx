@@ -21,8 +21,6 @@ export default function VideoCall({ roomID, userID, userName }) {
         userName
       );
 
-    //   console.log("Generated kit token:", kitToken);
-
       if (!hasJoinedRef.current) {
         if (!zegoInstanceRef.current) {
           zegoInstanceRef.current = ZegoUIKitPrebuilt.create(kitToken);

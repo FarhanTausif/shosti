@@ -3,7 +3,6 @@ import { signupAttendee, signinAttendee, getAttendeeProfile, updateAttendeeProfi
 
 const router = express.Router();
 
-
 router.post("/signup/attendee", signupAttendee);
 router.post("/signin", signinAttendee);
 router.get("/all", getAllAttendeeProfile );

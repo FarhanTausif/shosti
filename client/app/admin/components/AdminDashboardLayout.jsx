@@ -13,7 +13,7 @@ import { ViewResources } from "./mh-admin/ViewResources";
 
 export const AdminDashboardLayout = ({ children, role, userName, email }) => {
   const router = useRouter();
-  const [activeSection, setActiveSection] = useState("dashboard");
+  const [activeSection, setActiveSection] = useState(role === "general-admin" ? "attendees" : "mhp-request");
 
   useEffect(() => {
     if (typeof window !== "undefined" && window.location.hash) {
@@ -35,13 +35,13 @@ export const AdminDashboardLayout = ({ children, role, userName, email }) => {
 
   const navItems = {
     "general-admin": [
-      { 
-        name: "Dashboard",
-        section: "dashboard",
-        icon: <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
-              </svg>
-      },
+      // { 
+      //   name: "Dashboard",
+      //   section: "dashboard",
+      //   icon: <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+      //           <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
+      //         </svg>
+      // },
       { 
         name: "Attendees Information",
         section: "attendees",
@@ -72,13 +72,13 @@ export const AdminDashboardLayout = ({ children, role, userName, email }) => {
       },
     ],
     "mh-admin": [
-      { 
-        name: "Dashboard",
-        section: "dashboard",
-        icon: <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
-              </svg>
-      },
+      // { 
+      //   name: "Dashboard",
+      //   section: "dashboard",
+      //   icon: <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+      //           <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
+      //         </svg>
+      // },
       { 
         name: "MHP Request",
         section: "mhp-request",
@@ -155,9 +155,9 @@ export const AdminDashboardLayout = ({ children, role, userName, email }) => {
       {/* Main Content */}
       <main className="flex-1 p-8">
         <div className="max-w-7xl mx-auto bg-white/90 backdrop-blur-sm rounded-2xl border border-slate-200/60 p-8 shadow-lg">
-          {role === "general-admin" && activeSection === "dashboard" && (
+          {/* {role === "general-admin" && activeSection === "dashboard" && (
             <DashboardContent userName={userName} />
-          )}
+          )} */}
           {role === "general-admin" && activeSection === "attendees" && (
             <AttendeeInformation userName={userName} />
           )}
@@ -167,7 +167,7 @@ export const AdminDashboardLayout = ({ children, role, userName, email }) => {
           {role === "general-admin" && activeSection === "sessions" && (
             <SessionsInformation userName={userName} />
           )}
-          {role === "mh-admin" && activeSection === "dashboard" && <MHADashboard userName={userName}/>}
+          {/* {role === "mh-admin" && activeSection === "dashboard" && <MHADashboard userName={userName}/>} */}
           {role === "mh-admin" && activeSection === "mhp-request" && <MHPRequest />}
           {role === "mh-admin" && activeSection === "resourceUpload" && <Resources userName={userName} email={email} />}
           {role === "mh-admin" && activeSection === "resourcesShow" && <ViewResources />}
