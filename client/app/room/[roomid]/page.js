@@ -9,7 +9,7 @@ export default function RoomPage() {
   // Generate a random userID (for example purposes)
   const userID = "user" + Math.floor(Math.random() * 10000);
   // You could also prompt the user for their name; here we use a default
-  const userName = "Alice";
+  const userName = "i.e. : Alice";
 
   return (
     <div style={{ height: "100vh" }}>

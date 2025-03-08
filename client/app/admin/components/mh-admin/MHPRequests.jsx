@@ -42,7 +42,9 @@ export function MHPRequest() {
       });
       setShowStatusModal(true);
       setPendingMHPs(pendingMHPs.filter((mhp) => mhp.username !== userName));
+      setTimeout(() => {
       window.location.reload();
+      }, 2500);
     } catch (err) {
       console.error(err);
       setModalContent({
@@ -127,7 +129,7 @@ export function MHPRequest() {
                   </div>
                 )}
                 <p className="text-gray-700">{modalContent.message}</p>
-                <Button
+                {/* <Button
                   onClick={() => setShowStatusModal(false)}
                   className={`mt-4 ${
                     modalContent.status === "approved" ? "bg-green-600 hover:bg-green-700" :
@@ -135,7 +137,7 @@ export function MHPRequest() {
                   } text-white`}
                 >
                   Close
-                </Button>
+                </Button> */}
               </div>
             </div>
           </div>

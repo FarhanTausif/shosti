@@ -3,23 +3,22 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-// Configure transporter
 const transporter = nodemailer.createTransport({
-  service: "gmail", // Use 'gmail' or another service like 'yahoo', 'outlook'
+  service: "gmail", 
   auth: {
-    user: process.env.EMAIL_USER, // Your email
-    pass: process.env.EMAIL_PASS, // Your App Password (not your actual password)
+    user: process.env.EMAIL_USER, 
+    pass: process.env.EMAIL_PASS, 
   },
 });
 
-// Function to send emails
+
 export const sendEmail = async (to, subject, html) => {
   try {
     const info = await transporter.sendMail({
-      from: `${process.env.EMAIL_USER}`, // Sender address
-      to: to, // Receiver email
-      subject: subject, // Subject line
-      html: html, // HTML body content
+      from: `${process.env.EMAIL_USER}`, 
+      to: to, 
+      subject: subject, 
+      html: html, 
     });
 
     console.log("Email sent: ", info.response);
@@ -32,10 +31,10 @@ export const sendEmail = async (to, subject, html) => {
 export const sendOTP = async (email, otp) => {
   try {
     const info = await transporter.sendMail({
-      from: `${process.env.EMAIL_USER}`, // Sender address
-      to: email, // Receiver email
-      subject: "Password Reset OTP", // Subject line
-      html: `<h2>Your OTP for password reset is: ${otp}<h2>`, // HTML body content
+      from: `${process.env.EMAIL_USER}`, 
+      to: email, 
+      subject: "Password Reset OTP", 
+      html: `<h2>Your OTP for password reset is: ${otp}<h2>`, 
     });
 
     console.log("Email sent: ", info.response);
