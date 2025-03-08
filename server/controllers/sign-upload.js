@@ -1,4 +1,3 @@
-
 import { v2 as cloudinary } from "cloudinary";
 import dotenv from 'dotenv';
 dotenv.config();
@@ -11,7 +10,7 @@ cloudinary.config({
 
 export const generateSignature = (req, res, next) => {
   const { folder } = req.body;
-  console.log("Foldar NAME: ",folder);
+  // console.log("Foldar NAME: ",folder);
   if (!folder) {
     res.status(400);
     return next(new Error("Folder name is required"));

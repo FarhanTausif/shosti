@@ -21,7 +21,7 @@ export const sendEmail = async (to, subject, html) => {
       html: html, 
     });
 
-    console.log("Email sent: ", info.response);
+    // console.log("Email sent: ", info.response);
     return info;
   } catch (error) {
     console.error("Error sending email:", error);
@@ -37,7 +37,7 @@ export const sendOTP = async (email, otp) => {
       html: `<h2>Your OTP for password reset is: ${otp}<h2>`, 
     });
 
-    console.log("Email sent: ", info.response);
+    // console.log("Email sent: ", info.response);
     return info;
   } catch (error) {
     console.error("Error sending email:", error);

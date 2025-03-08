@@ -86,7 +86,7 @@ export const completeSession = async (req, res) => {
     session.session_status = "completed";
     await session.save();
 
-    console.log("Session after completion: ", session);
+    // console.log("Session after completion: ", session);
     res.status(200).json({ message: "Session marked as completed successfully!" });
   } catch (err) {
     res.status(500).json({ error: "Failed to mark session as complete" });
@@ -169,7 +169,7 @@ export const initiateSessionPayment = async (req, res) => {
 
     // Call the payment service to initiate payment
     const redirectURL = await initiatePayment(sessionData); // Call the function to initiate the payment
-    console.log("Redirect URL:", redirectURL);
+    // console.log("Redirect URL:", redirectURL);
     res.status(200).json({ redirectURL }); // Send the redirect URL to the client
   } catch (error) {
     res.status(500).json({ error: "Failed to initiate payment" });
