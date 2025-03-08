@@ -232,6 +232,7 @@ export const SessionCard = ({ professional, datetime, sessionStatus, recommendat
   const isPaymentCompleted = paymentStatus === 'completed';
   const isApproved = sessionStatus === 'approved';
   const isDeclined = sessionStatus === 'declined';
+  const isOffline = sessionType === 'offline';
   const [loading, setLoading] = useState(false);
   const sessionDate = new Date(datetime);
   const today = new Date();
@@ -326,17 +327,26 @@ export const SessionCard = ({ professional, datetime, sessionStatus, recommendat
               </svg>
               {sessionType.charAt(0).toUpperCase() + sessionType.slice(1)} Session
           </p>
-          {!isDeclined && (<p className="text-sm text-gray-600 flex items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
-              </svg>
-              Payment Status: {paymentStatus.charAt(0).toUpperCase() + paymentStatus.slice(1)}
-              <span className={`font-medium ${
-                paymentStatus === 'completed' ? 'text-green-600' :
-                paymentStatus === 'pending' ? 'text-amber-600' :
-                'text-red-600'
-              }`}></span>      
-          </p>)}
+          
+          {!isDeclined && (
+          <p className="text-sm text-gray-600 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+            </svg>
+            {isOffline ? (
+              'Payment Status: Offline'
+            ) : (
+              <>
+                Payment Status: {paymentStatus.charAt(0).toUpperCase() + paymentStatus.slice(1)}
+                <span className={`font-medium ${
+                  paymentStatus === 'completed' ? 'text-green-600' :
+                  paymentStatus === 'pending' ? 'text-amber-600' :
+                  'text-red-600'
+                }`}></span>
+              </>
+            )}
+          </p>
+        )}
         </div>
         <span className={`px-3 py-1 rounded-full text-sm font-medium ${sessionStatus === 'approved' ? 'bg-indigo-100 text-indigo-800' : sessionStatus === 'pending' ? 'bg-red-100 text-red-800' : 'bg-emerald-100 text-emerald-800 '}`}>
           {sessionStatus.charAt(0).toUpperCase() + sessionStatus.slice(1)}
@@ -388,7 +398,7 @@ export const SessionCard = ({ professional, datetime, sessionStatus, recommendat
           </div>
         )}
 
-        {isApproved && !isPaymentCompleted && (
+        {isApproved && !isPaymentCompleted && !isOffline && (
           <button 
             className="bg-violet-900 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-xl transition-colors duration-200 flex items-center gap-2 motion-safe:animate-bounce"
             onClick={handlePayment} 
@@ -401,7 +411,7 @@ export const SessionCard = ({ professional, datetime, sessionStatus, recommendat
           </button>
         )}
 
-        {isApproved && isPaymentCompleted && isToday && (
+        {isApproved && isPaymentCompleted && isToday && !isOffline && (
           <Link legacyBehavior
             href={`/room/${sessionID}`} // Dynamic room link
             passHref
