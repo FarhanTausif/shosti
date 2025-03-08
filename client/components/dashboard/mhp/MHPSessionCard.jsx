@@ -410,6 +410,7 @@ import Link from "next/link";
 
 export const MHPSessionCard = ({ attendee, datetime, sessionStatus, sessionType, paymentStatus, sessionID, recommendations, onApprove, onDecline, onComplete, onProvideRecommendation }) => {
   const isPaymentCompleted = paymentStatus === 'completed';
+  const isPaymentOffline = sessionType === 'offline';
   const isApproved = sessionStatus === 'approved';
   const isDeclined = sessionStatus === 'declined';
   const isCompleted = sessionStatus === 'completed';
@@ -455,7 +456,7 @@ export const MHPSessionCard = ({ attendee, datetime, sessionStatus, sessionType,
   return (
     <div className="bg-white rounded-xl shadow-lg p-6 mb-4 transition-all duration-200 hover:shadow-xl border border-gray-100">
       {/* Session Schedule Banner */}
-      {isApproved && isPaymentCompleted && !isPastSession && isOffline && (
+      {(isApproved && (isPaymentCompleted || isPaymentOffline) && !isPastSession) && (
         <div className="mb-4 p-3 bg-emerald-50 border-l-4 border-emerald-600 rounded-lg animate-bounce">
           <p className="text-sm font-semibold text-emerald-800 flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -686,16 +687,8 @@ export const MHPSessionCard = ({ attendee, datetime, sessionStatus, sessionType,
         <div className="mt-6 flex items-center gap-3">
           <button 
             onClick={onComplete}
-            className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-xl transition-all duration-200 font-medium shadow-lg"
+            className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-green-600 to-green-800 hover:from-green-600 hover:to-green-800 text-white rounded-xl transition-all duration-200 font-medium shadow-lg"
           >
-            <svg 
-              className="w-5 h-5" 
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
             Mark Session Complete
           </button>
           <span className="text-sm text-gray-500">Session will be archived after completion</span>
