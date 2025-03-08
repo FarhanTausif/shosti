@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const adminSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true, // Now each admin must have a name
+    required: true, 
   },
   email: {
     type: String,
@@ -16,10 +16,10 @@ const adminSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['general-admin', 'mh-admin'], // Enforce valid roles
+    enum: ['general-admin', 'mh-admin'], 
     required: true,
   },
-  // Add other fields if needed
+  
 });
 
 const Admin = mongoose.model('Admin', adminSchema);

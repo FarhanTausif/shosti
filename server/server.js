@@ -6,8 +6,13 @@ import adminAuthRoutes from './routes/adminAuthRoutes.js';
 import attendeeAuthRoutes from "./routes/attendeeAuthRoutes.js";
 import mhpAuthRoutes from "./routes/mhpAuthRoutes.js";
 import chatbotRoutes from "./routes/chatbotRoutes.js";
-
-import { verifyToken, restrictTo } from './middleware/authMiddleware.js';
+import sessionRoutes from "./routes/sessionRoutes.js";
+import professionalRoutes from "./routes/professionalRoutes.js";
+import resourceRoutes from "./routes/resourcesRoutes.js";
+import signUploadRoutes from "./routes/sign-upload.js";
+import forgetRoutes from "./routes/forgetRoutes.js"
+import { errorHandler } from "./middleware/error.js";
+import { handlePaymentCancel, handlePaymentFailure, handlePaymentSuccess } from './controllers/paymentController.js';
 
 dotenv.config();
 
@@ -25,7 +30,7 @@ app.use(
 app.use(express.json()); // JSON body parsing
 
 // Database connection
-mongoose.connect(MONGO_URI).then(()=>console.log("Mongo-DB is connected")).catch((e) => console.log(e));
+mongoose.connect(MONGO_URI).then(()=>console.log("MongoDB is connected")).catch((e) => console.log(e));
 
 
 // Routes
@@ -34,17 +39,16 @@ app.use("/api/auth", attendeeAuthRoutes);
 app.use("/api/auth", mhpAuthRoutes);
 app.use("/api/attendees", attendeeAuthRoutes);
 app.use("/api/mhps", mhpAuthRoutes);
+app.use("/api/forgot",forgetRoutes);
 app.use("/api/chatbot", chatbotRoutes);
-
-
-// Protected Routes Example
-app.get('/api/admin/general/stats', 
-  verifyToken,
-  restrictTo('general-admin'),
-  (req, res) => {
-    res.json({ stats: 'General admin data' });
-  }
-);
+app.use('/api/sessions', sessionRoutes);
+app.use("/api/professionals", professionalRoutes); 
+app.use("/api/resources", resourceRoutes);
+app.use("/api/sign-upload", signUploadRoutes);
+app.use(errorHandler);
+app.post('/success/:sessionId', handlePaymentSuccess);
+app.post('/fail/:sessionId', handlePaymentFailure);
+app.post('/cancel/:sessionId', handlePaymentCancel);
 
 // Error handling
 app.use((err, req, res, next) => {
