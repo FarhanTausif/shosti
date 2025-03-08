@@ -29,7 +29,7 @@ export const Sessions = ({ email }) => {
       </h2>
 
       {/* Filter buttons */}
-      <div className="mb-4">
+      <div className="mb-4 flex gap-2 flex-wrap">
         <button onClick={() => setFilter("all")} className="bg-blue-600 text-white py-2 px-4 rounded-full mr-2">
           All Sessions
         </button>
