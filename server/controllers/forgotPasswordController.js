@@ -1,6 +1,6 @@
 import Attendee from '../models/Attendee.js';
 import MHP from '../models/MHP.js';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import { sendOTP } from '../services/emailService.js';
 
 // Forgot Password Controller
