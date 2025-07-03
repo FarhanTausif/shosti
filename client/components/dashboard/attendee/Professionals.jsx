@@ -63,14 +63,28 @@ export const Professionals = ({ email }) => {
           Available Professionals
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {professionals.map((professional) => (
+          {/* {professionals.map((professional) => (
             <ProfessionalCard
               key={professional.email}
               professional={professional}
               onRequestSession={requestSession}
               sessionStatus={requestedSessions[professional.email]}
             />
-          ))}
+          ))} */}
+          {professionals.map((professional) => {
+                        // Check if the professional's status is 'approved'
+                        if (professional.status === 'approved') {
+                            return (
+                                <ProfessionalCard
+                                    key={professional.email}
+                                    professional={professional}
+                                    onRequestSession={requestSession}
+                                    sessionStatus={requestedSessions[professional.email]}
+                                />
+                            );
+                        }
+                        return null; // Don't render anything if the status is not 'approved'
+                    })}
         </div>
         </section>
 
